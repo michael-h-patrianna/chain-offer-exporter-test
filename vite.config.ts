@@ -37,7 +37,7 @@ export default defineConfig({
           // Split vendor dependencies into separate chunks
           if (id.includes('node_modules')) {
             // React core and related
-            if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('scheduler') || id.includes('framer-motion')) {
               return 'vendor-react';
             }
             // JSZip for file handling
