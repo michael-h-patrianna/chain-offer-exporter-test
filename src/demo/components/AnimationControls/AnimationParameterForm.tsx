@@ -10,7 +10,7 @@ import { ParameterSlider } from './ParameterSlider';
 interface AnimationParameterFormProps {
   animationType: AnimationType;
   onAnimationTypeChange?: (animationType: AnimationType) => void;
-  onReplay?: () => void;
+  onReplay?: () => void; // Added onReplay prop
 }
 
 export function AnimationParameterForm({ animationType, onAnimationTypeChange, onReplay }: AnimationParameterFormProps) {
@@ -27,9 +27,9 @@ export function AnimationParameterForm({ animationType, onAnimationTypeChange, o
 
     const parameters = getParameters(animationType);
     
+    // Updated logic to show parameters for all animations that use them
     const isSpringAnimation = ['spring-physics', 'silk-unfold', 'orbital-reveal', 'elastic-bounce'].includes(animationType);
-    // Crystal Shimmer uses keyframe arrays for scale, so it responds to wobble intensity.
-    const isWobbleAnimation = ['elastic-bounce', 'scale-rotate', 'crystal-shimmer'].includes(animationType);
+    const isWobbleAnimation = ['elastic-bounce', 'scale-rotate', 'glitch-snap', 'crystal-shimmer'].includes(animationType);
     const isOrbitalAnimation = animationType === 'orbital-reveal';
     
     const isNoneAnimation = animationType === 'none';
@@ -272,5 +272,5 @@ export function AnimationParameterForm({ animationType, onAnimationTypeChange, o
         </ParameterGroup>
       )}
     </div>
-  );
+  )
 }
