@@ -23,7 +23,7 @@
  * logic while providing callback props for external integration.
  */
 
-import { motion } from 'framer-motion';
+import { m, LazyMotion, domAnimation } from 'framer-motion';
 import React from 'react';
 import { RevealAnimation } from '../animation/types';
 import { useQuestlineState } from '../hooks/useQuestlineState';
@@ -192,7 +192,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
       const questImage = assets?.questImages?.[quest.questKey]?.[currentState];
 
       return (
-        <motion.div 
+        <m.div 
           key={quest.questKey} 
           variants={animationConfig?.itemVariants}
           style={{ position: 'relative', zIndex: 10, width: 0, height: 0 }}
@@ -205,7 +205,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
             showQuestKeys={showQuestKeys}
             onCycleState={cycleQuestState}
           />
-        </motion.div>
+        </m.div>
       );
     });
   };
@@ -220,7 +220,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
     if (!visibility.timer || !questlineData.timer) return null;
 
     return (
-      <motion.div 
+      <m.div 
         variants={animationConfig?.timerVariants}
         style={{ position: 'relative', zIndex: 25, width: 0, height: 0 }}
       >
@@ -228,7 +228,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
           timer={questlineData.timer}
           scale={scale}
         />
-      </motion.div>
+      </m.div>
     );
   };
 
@@ -244,7 +244,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
     const headerImage = assets?.headerImages?.[headerState];
 
     return (
-      <motion.div 
+      <m.div 
         variants={animationConfig?.headerImageVariants} 
         style={{ position: 'relative', zIndex: 20, width: 0, height: 0 }}
       >
@@ -255,7 +255,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
           headerImage={headerImage}
           onCycleState={cycleHeaderState}
         />
-      </motion.div>
+      </m.div>
     );
   };
 
@@ -271,7 +271,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
     const rewardsImage = assets?.rewardsImages?.[rewardsState];
 
     return (
-      <motion.div 
+      <m.div 
         variants={animationConfig?.questlineBonusRewardsVariants}
         style={{ position: 'relative', zIndex: 15, width: 0, height: 0 }}
       >
@@ -282,7 +282,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
           rewardsImage={rewardsImage}
           onCycleState={cycleRewardsState}
         />
-      </motion.div>
+      </m.div>
     );
   };
 
@@ -296,7 +296,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
     if (!visibility.button || !questlineData.button) return null;
 
     return (
-      <motion.div 
+      <m.div 
         variants={animationConfig?.questlineFooterVariants}
         style={{ position: 'relative', zIndex: 30, width: 0, height: 0 }}
       >
@@ -308,7 +308,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
           onMouseLeave={handleButtonMouseLeave}
           onClick={() => handleButtonClick(onButtonClick)}
         />
-      </motion.div>
+      </m.div>
     );
   };
 
@@ -318,51 +318,54 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
 
 
   return (
-    <div
-      className="questline-container-wrapper"
-      role="region"
-      aria-label="Questline game interface"
-    >
-      <motion.div
-        className="questline-viewer questline-canvas"
-        role="img"
-        aria-label="Interactive questline with clickable quests and components"
-        style={{
-          '--questline-width': `${scaledWidth}px`,
-          '--questline-height': `${scaledHeight}px`,
-          '--content-bounds-left': `${contentBounds.minX}px`,
-          '--content-bounds-top': `${contentBounds.minY}px`,
-          '--content-bounds-width': `${contentBounds.width}px`,
-          '--content-bounds-height': `${contentBounds.height}px`
-        } as React.CSSProperties}
-        initial="hidden"
-        animate="visible"
-        variants={animationConfig?.containerVariants}
+    <LazyMotion features={domAnimation}>
+      <div
+        className="questline-container-wrapper"
+        role="region"
+        aria-label="Questline game interface"
       >
+        <m.div
+          className="questline-viewer questline-canvas"
+          role="img"
+          aria-label="Interactive questline with clickable quests and components"
+          style={{
+            '--questline-width': `${scaledWidth}px`,
+            '--questline-height': `${scaledHeight}px`,
+            '--content-bounds-left': `${contentBounds.minX}px`,
+            '--content-bounds-top': `${contentBounds.minY}px`,
+            '--content-bounds-width': `${contentBounds.width}px`,
+            '--content-bounds-height': `${contentBounds.height}px`
+          } as React.CSSProperties}
+          initial="hidden"
+          animate="visible"
+          variants={animationConfig?.containerVariants}
+        >
 
-        {/* Content bounds indicator for debugging/development */}
-        <div className="content-bounds-indicator" />
+          {/* Content bounds indicator for debugging/development */}
+          <div className="content-bounds-indicator" />
 
-        {/* Background image rendering */}
-        {visibility.background && assets.backgroundImage && (
-          <div className="questline-background">
-            <img
-              src={assets.backgroundImage}
-              alt="Questline background"
-              className="questline-background-image"
-              draggable={false}
-            />
-          </div>
-        )}
+          {/* Background image rendering */}
+          {visibility.background && assets.backgroundImage && (
+            <div className="questline-background">
+              <img
+                src={assets.backgroundImage}
+                alt="Questline background"
+                className="questline-background-image"
+                draggable={false}
+              />
+            </div>
+          )}
 
-        {/* Render all questline components in layered order */}
-        {renderTimer()}
-        {renderHeader()}
-        {renderRewards()}
-        {renderQuests()}
-        {renderButton()}
+          {/* Render all questline components in layered order */}
+          {renderTimer()}
+          {renderHeader()}
+          {renderRewards()}
+          {renderQuests()}
+          {renderButton()}
 
-      </motion.div>
-    </div>
+        </m.div>
+      </div>
+    </LazyMotion>
   );
 };
+
