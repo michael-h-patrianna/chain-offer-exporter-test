@@ -28,7 +28,8 @@ export function AnimationParameterForm({ animationType, onAnimationTypeChange, o
     const parameters = getParameters(animationType);
     
     const isSpringAnimation = ['spring-physics', 'silk-unfold', 'orbital-reveal', 'elastic-bounce'].includes(animationType);
-    const isWobbleAnimation = ['elastic-bounce', 'scale-rotate'].includes(animationType);
+    // Crystal Shimmer uses keyframe arrays for scale, so it responds to wobble intensity.
+    const isWobbleAnimation = ['elastic-bounce', 'scale-rotate', 'crystal-shimmer'].includes(animationType);
     const isOrbitalAnimation = animationType === 'orbital-reveal';
     
     const isNoneAnimation = animationType === 'none';
