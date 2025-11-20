@@ -62,6 +62,68 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
+    titleVariants: {
+      hidden: {
+        opacity: 0,
+        y: 20,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.5,
+          delay: 0.6,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
+    footerVariants: {
+      hidden: {
+        opacity: 0,
+        y: 20,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.4,
+          delay: 1.2,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
+    questlineHeaderImageVariants: {
+      hidden: {
+        opacity: 0,
+        y: -50,
+        scale: 0.9,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+          duration: 0.7,
+          delay: 0.1,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
+    questlineTimerVariants: {
+      hidden: {
+        opacity: 0,
+        scale: 0.8,
+      },
+      visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+          duration: 0.5,
+          delay: 0.3,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
     questlineDescriptionVariants: {
       hidden: {
         opacity: 0,
@@ -151,7 +213,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         opacity: 1,
         transition: {
           duration: 0.5,
-          ease: [0.34, 1.56, 0.64, 1],
+          ease: [0.34, 1.56, 0.64, 1], // pop easing
         },
       },
     },
@@ -189,7 +251,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    titleVariants: {
       hidden: {
         scale: 0.85,
         opacity: 0,
@@ -200,6 +262,70 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         transition: {
           duration: 0.5,
           delay: 0.5,
+          ease: [0.34, 1.56, 0.64, 1],
+        },
+      },
+    },
+    footerVariants: {
+      hidden: {
+        scale: 0.9,
+        opacity: 0,
+      },
+      visible: {
+        scale: 1,
+        opacity: 1,
+        transition: {
+          duration: 0.4,
+          delay: 1.1,
+          ease: [0.34, 1.56, 0.64, 1],
+        },
+      },
+    },
+    questlineHeaderImageVariants: {
+      hidden: {
+        scale: 0.6,
+        rotate: -15,
+        opacity: 0,
+      },
+      visible: {
+        scale: [0.6, 1.12, 1],
+        rotate: [-15, 5, 0],
+        opacity: 1,
+        transition: {
+          duration: 0.8,
+          delay: 0.05,
+          ease: [0.34, 1.56, 0.64, 1],
+        },
+      },
+    },
+    questlineTimerVariants: {
+      hidden: {
+        scale: 0.4,
+        rotate: 10,
+        opacity: 0,
+      },
+      visible: {
+        scale: [0.4, 1.2, 1],
+        rotate: 0,
+        opacity: 1,
+        transition: {
+          duration: 0.7,
+          delay: 0.25,
+          ease: [0.34, 1.56, 0.64, 1],
+        },
+      },
+    },
+    questlineDescriptionVariants: {
+      hidden: {
+        scale: 0.9,
+        opacity: 0,
+      },
+      visible: {
+        scale: [0.9, 1.05, 1],
+        opacity: 1,
+        transition: {
+          duration: 0.5,
+          delay: 0.45,
           ease: [0.34, 1.56, 0.64, 1],
         },
       },
@@ -312,6 +438,70 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         transition: {
           duration: 0.7,
           delay: 0.4,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
+    titleVariants: {
+      hidden: {
+        opacity: 0,
+        rotateX: 90,
+      },
+      visible: {
+        opacity: 1,
+        rotateX: 0,
+        transition: {
+          duration: 0.6,
+          delay: 0.6,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
+    footerVariants: {
+      hidden: {
+        opacity: 0,
+        rotateX: -45,
+      },
+      visible: {
+        opacity: 1,
+        rotateX: 0,
+        transition: {
+          duration: 0.5,
+          delay: 1.2,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
+    questlineHeaderImageVariants: {
+      hidden: {
+        opacity: 0,
+        rotateX: -100,
+        transformPerspective: 1200,
+      },
+      visible: {
+        opacity: 1,
+        rotateX: 0,
+        transformPerspective: 1200,
+        transition: {
+          duration: 0.9,
+          delay: 0.1,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
+    questlineTimerVariants: {
+      hidden: {
+        opacity: 0,
+        rotateY: 180,
+        scale: 0.7,
+      },
+      visible: {
+        opacity: 1,
+        rotateY: 0,
+        scale: 1,
+        transition: {
+          duration: 0.8,
+          delay: 0.35,
           ease: [0.25, 0.46, 0.45, 0.94],
         },
       },
@@ -449,6 +639,76 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
+    titleVariants: {
+      hidden: {
+        y: 50,
+        opacity: 0,
+      },
+      visible: {
+        y: 0,
+        opacity: 1,
+        transition: {
+          type: 'spring',
+          stiffness: 200,
+          damping: 20,
+          mass: 1,
+          delay: 0.5,
+        },
+      },
+    },
+    footerVariants: {
+      hidden: {
+        y: 30,
+        opacity: 0,
+      },
+      visible: {
+        y: 0,
+        opacity: 1,
+        transition: {
+          type: 'spring',
+          stiffness: 150,
+          damping: 15,
+          mass: 0.8,
+          delay: 1.0,
+        },
+      },
+    },
+    questlineHeaderImageVariants: {
+      hidden: {
+        scale: 0.4,
+        y: -180,
+        opacity: 0,
+      },
+      visible: {
+        scale: 1,
+        y: 0,
+        opacity: 1,
+        transition: {
+          type: 'spring',
+          stiffness: 160,
+          damping: 11,
+          mass: 1.8,
+          delay: 0.05,
+        },
+      },
+    },
+    questlineTimerVariants: {
+      hidden: {
+        scale: 0,
+        opacity: 0,
+      },
+      visible: {
+        scale: 1,
+        opacity: 1,
+        transition: {
+          type: 'spring',
+          stiffness: 280,
+          damping: 20,
+          mass: 0.7,
+          delay: 0.25,
+        },
+      },
+    },
     questlineDescriptionVariants: {
       hidden: {
         y: 60,
@@ -578,6 +838,64 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
+    titleVariants: {
+      hidden: {
+        opacity: 0,
+      },
+      visible: {
+        opacity: 1,
+        transition: {
+          duration: 0.5,
+          delay: 0.5,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
+    footerVariants: {
+      hidden: {
+        opacity: 0,
+        y: 20,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.4,
+          delay: 1.1,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
+    questlineHeaderImageVariants: {
+      hidden: {
+        opacity: 0,
+        x: -70,
+      },
+      visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+          duration: 0.7,
+          delay: 0.1,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
+    questlineTimerVariants: {
+      hidden: {
+        opacity: 0,
+        x: 70,
+      },
+      visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+          duration: 0.7,
+          delay: 0.25,
+          ease: [0.25, 0.46, 0.45, 0.94],
+        },
+      },
+    },
     questlineDescriptionVariants: {
       hidden: {
         opacity: 0,
@@ -700,6 +1018,71 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
+    titleVariants: {
+      hidden: {
+        opacity: 0,
+        scaleX: 0,
+      },
+      visible: {
+        opacity: 1,
+        scaleX: [0, 1.5, 0.8, 1.2, 0.95, 1],
+        scaleY: [1, 0.7, 1.3, 0.9, 1],
+        transition: {
+          duration: 0.6,
+          delay: 0.15,
+          ease: 'easeOut',
+        },
+      },
+    },
+    footerVariants: {
+      hidden: {
+        opacity: 0,
+        scale: 0,
+      },
+      visible: {
+        opacity: 1,
+        scale: [0, 1.4, 0.85, 1.15, 0.95, 1],
+        rotate: [0, 15, -8, 4, 0],
+        transition: {
+          duration: 0.6,
+          delay: 0.45,
+          ease: 'easeOut',
+        },
+      },
+    },
+    questlineHeaderImageVariants: {
+      hidden: {
+        opacity: 0,
+        scale: 0,
+      },
+      visible: {
+        opacity: 1,
+        scale: [0, 1.7, 0.75, 1.3, 0.9, 1],
+        scaleY: [1, 0.7, 1.3, 0.9, 1.05, 1],
+        rotate: [0, -25, 15, -8, 0],
+        transition: {
+          duration: 0.75,
+          delay: 0,
+          ease: 'easeOut',
+        },
+      },
+    },
+    questlineTimerVariants: {
+      hidden: {
+        opacity: 0,
+        scale: 0,
+      },
+      visible: {
+        opacity: 1,
+        scale: [0, 1.8, 0.6, 1.35, 0.85, 1],
+        rotate: [0, 22, -13, 7, 0],
+        transition: {
+          duration: 0.7,
+          delay: 0.06,
+          ease: 'easeOut',
+        },
+      },
+    },
     questlineDescriptionVariants: {
       hidden: {
         opacity: 0,
@@ -795,8 +1178,10 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         scale: 1,
         rotate: 0,
         transition: {
-          duration: 0.9,
-          ease: [0.34, 1.56, 0.64, 1],
+          type: 'spring',
+          stiffness: 120,
+          damping: 12,
+          mass: 1.0,
         },
       },
     },
@@ -815,9 +1200,11 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         scale: 1,
         rotate: 0,
         transition: {
-          duration: 1.0,
+          type: 'spring',
+          stiffness: 120,
+          damping: 12,
+          mass: 1.0,
           delay: 0.1,
-          ease: [0.34, 1.56, 0.64, 1],
         },
       },
     },
@@ -836,9 +1223,99 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         scale: 1,
         rotate: 0,
         transition: {
-          duration: 0.9,
+          type: 'spring',
+          stiffness: 120,
+          damping: 12,
+          mass: 1.0,
           delay: 0.3,
-          ease: [0.34, 1.56, 0.64, 1],
+        },
+      },
+    },
+    titleVariants: {
+      hidden: {
+        opacity: 0,
+        x: -80,
+        y: 40,
+        rotate: -45,
+      },
+      visible: {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        rotate: 0,
+        transition: {
+          type: 'spring',
+          stiffness: 120,
+          damping: 12,
+          mass: 1.0,
+          delay: 0.5,
+        },
+      },
+    },
+    footerVariants: {
+      hidden: {
+        opacity: 0,
+        y: 60,
+        x: 40,
+        rotate: 20,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        x: 0,
+        rotate: 0,
+        transition: {
+          type: 'spring',
+          stiffness: 120,
+          damping: 12,
+          mass: 1.0,
+          delay: 1.1,
+        },
+      },
+    },
+    questlineHeaderImageVariants: {
+      hidden: {
+        opacity: 0,
+        y: -250,
+        x: -80,
+        scale: 0.3,
+        rotate: -120,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        x: 0,
+        scale: 1,
+        rotate: 0,
+        transition: {
+          type: 'spring',
+          stiffness: 120,
+          damping: 12,
+          mass: 1.0,
+          delay: 0.1,
+        },
+      },
+    },
+    questlineTimerVariants: {
+      hidden: {
+        opacity: 0,
+        x: 180,
+        y: 70,
+        scale: 0.2,
+        rotate: 200,
+      },
+      visible: {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        rotate: 0,
+        transition: {
+          type: 'spring',
+          stiffness: 120,
+          damping: 12,
+          mass: 1.0,
+          delay: 0.25,
         },
       },
     },
@@ -855,9 +1332,11 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         y: 0,
         rotate: 0,
         transition: {
-          duration: 0.8,
+          type: 'spring',
+          stiffness: 120,
+          damping: 12,
+          mass: 1.0,
           delay: 0.45,
-          ease: [0.34, 1.56, 0.64, 1],
         },
       },
     },
@@ -876,9 +1355,11 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         scale: 1,
         rotate: 0,
         transition: {
-          duration: 0.9,
+          type: 'spring',
+          stiffness: 120,
+          damping: 12,
+          mass: 1.0,
           delay: 0.4,
-          ease: [0.34, 1.56, 0.64, 1],
         },
       },
     },
@@ -895,9 +1376,11 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         scaleX: 1,
         rotate: 0,
         transition: {
-          duration: 0.8,
+          type: 'spring',
+          stiffness: 120,
+          damping: 12,
+          mass: 1.0,
           delay: 0.6,
-          ease: [0.34, 1.56, 0.64, 1],
         },
       },
     },
@@ -914,9 +1397,11 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         x: 0,
         rotate: 0,
         transition: {
-          duration: 0.7,
+          type: 'spring',
+          stiffness: 120,
+          damping: 12,
+          mass: 1.0,
           delay: 1.0,
-          ease: [0.34, 1.56, 0.64, 1],
         },
       },
     },
@@ -955,10 +1440,78 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
     headerImageVariants: {
       hidden: {
         opacity: 0,
+        x: 0,
+        y: 0,
+      },
+      visible: {
+        opacity: [0, 1, 0.4, 1, 0.6, 1],
+        x: [0, -25, 30, -12, 8, 0],
+        y: [0, 15, -20, 10, -5, 0],
+        scale: [0.9, 1.1, 0.95, 1.05, 0.98, 1],
+        transition: {
+          duration: 0.3,
+          delay: 0.05,
+          times: [0, 0.15, 0.3, 0.5, 0.75, 1],
+          ease: 'linear',
+        },
+      },
+    },
+    timerVariants: {
+      hidden: {
+        opacity: 0,
+        scale: 0.8,
+      },
+      visible: {
+        opacity: [0, 1, 0.3, 1, 0.4, 1],
+        x: [0, 30, -20, 15, -8, 0],
+        scale: [0.8, 1.2, 0.9, 1.1, 0.95, 1],
+        transition: {
+          duration: 0.28,
+          delay: 0.15,
+          times: [0, 0.2, 0.4, 0.6, 0.8, 1],
+          ease: 'linear',
+        },
+      },
+    },
+    titleVariants: {
+      hidden: {
+        opacity: 0,
+      },
+      visible: {
+        opacity: [0, 1, 0.5, 1, 0.7, 1],
+        x: [0, -18, 22, -10, 6, 0],
+        y: [0, 12, -15, 8, -4, 0],
+        transition: {
+          duration: 0.26,
+          delay: 0.25,
+          times: [0, 0.18, 0.36, 0.6, 0.8, 1],
+          ease: 'linear',
+        },
+      },
+    },
+    footerVariants: {
+      hidden: {
+        opacity: 0,
+      },
+      visible: {
+        opacity: [0, 1, 0.4, 1, 0.6, 1],
+        x: [0, 15, -12, 8, -5, 0],
+        y: [0, -10, 12, -6, 3, 0],
+        transition: {
+          duration: 0.24,
+          delay: 0.7,
+          times: [0, 0.2, 0.4, 0.6, 0.8, 1],
+          ease: 'linear',
+        },
+      },
+    },
+    questlineHeaderImageVariants: {
+      hidden: {
+        opacity: 0,
       },
       visible: {
         opacity: [0, 1, 0.3, 1, 0.5, 1],
-        x: [0, -25, 35, -15, 10, 0],
+        x: [0, -30, 35, -15, 10, 0],
         y: [0, 20, -25, 12, -8, 0],
         scale: [0.85, 1.15, 0.9, 1.08, 0.96, 1],
         transition: {
@@ -969,7 +1522,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    timerVariants: {
+    questlineTimerVariants: {
       hidden: {
         opacity: 0,
         scale: 0.75,
@@ -1126,6 +1679,86 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
+    titleVariants: {
+      hidden: {
+        opacity: 0,
+        scaleY: 0.5,
+        scaleX: 0.96,
+      },
+      visible: {
+        opacity: 1,
+        scaleY: 1,
+        scaleX: 1,
+        x: 0,
+        transition: {
+          type: 'spring',
+          stiffness: 115,
+          damping: 18,
+          mass: 0.85,
+          delay: 0.6,
+        },
+      },
+    },
+    footerVariants: {
+      hidden: {
+        opacity: 0,
+        scaleY: 0.6,
+        scaleX: 0.97,
+      },
+      visible: {
+        opacity: 1,
+        scaleY: 1,
+        scaleX: 1,
+        x: 0,
+        transition: {
+          type: 'spring',
+          stiffness: 118,
+          damping: 19,
+          mass: 0.82,
+          delay: 1.3,
+        },
+      },
+    },
+    questlineHeaderImageVariants: {
+      hidden: {
+        opacity: 0,
+        scaleY: 0.15,
+        scaleX: 0.88,
+      },
+      visible: {
+        opacity: 1,
+        scaleY: 1,
+        scaleX: 1,
+        x: 0,
+        transition: {
+          type: 'spring',
+          stiffness: 105,
+          damping: 16,
+          mass: 1.0,
+          delay: 0.1,
+        },
+      },
+    },
+    questlineTimerVariants: {
+      hidden: {
+        opacity: 0,
+        scaleY: 0.35,
+        scaleX: 0.9,
+      },
+      visible: {
+        opacity: 1,
+        scaleY: 1,
+        scaleX: 1,
+        x: 0,
+        transition: {
+          type: 'spring',
+          stiffness: 122,
+          damping: 18,
+          mass: 0.78,
+          delay: 0.35,
+        },
+      },
+    },
     questlineDescriptionVariants: {
       hidden: {
         opacity: 0,
@@ -1273,7 +1906,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    titleVariants: {
       hidden: {
         opacity: 0,
         scale: 0.45,
@@ -1286,6 +1919,78 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         transition: {
           duration: 0.85,
           delay: 0.6,
+          times: [0, 0.12, 0.25, 0.4, 0.55, 0.7, 0.85, 1],
+          ease: 'linear',
+        },
+      },
+    },
+    footerVariants: {
+      hidden: {
+        opacity: 0,
+        scale: 0.42,
+      },
+      visible: {
+        opacity: [0, 0.28, 1, 0.4, 0.78, 1, 0.6, 1],
+        scale: [0.42, 0.68, 0.93, 1.07, 0.91, 1.015, 0.985, 1],
+        x: [0, 6, -4, 2.2, -1.3, 0.7, -0.35, 0],
+        y: [0, -4, 3, -2, 1.3, -0.7, 0.35, 0],
+        transition: {
+          duration: 0.8,
+          delay: 1.2,
+          times: [0, 0.12, 0.25, 0.4, 0.55, 0.7, 0.85, 1],
+          ease: 'linear',
+        },
+      },
+    },
+    questlineHeaderImageVariants: {
+      hidden: {
+        opacity: 0,
+        scale: 0.25,
+      },
+      visible: {
+        opacity: [0, 0.18, 1, 0.32, 0.72, 1, 0.52, 1],
+        scale: [0.25, 0.55, 0.88, 1.14, 0.86, 1.05, 0.96, 1],
+        x: [0, 12, -8, 5, -3, 1.8, -0.8, 0],
+        y: [0, -10, 6, -5, 3, -1.8, 0.8, 0],
+        transition: {
+          duration: 1.1,
+          delay: 0.1,
+          times: [0, 0.12, 0.25, 0.4, 0.55, 0.7, 0.85, 1],
+          ease: 'linear',
+        },
+      },
+    },
+    questlineTimerVariants: {
+      hidden: {
+        opacity: 0,
+        scale: 0.32,
+      },
+      visible: {
+        opacity: [0, 0.22, 1, 0.36, 0.78, 1, 0.56, 1],
+        scale: [0.32, 0.62, 0.91, 1.11, 0.89, 1.035, 0.975, 1],
+        x: [0, 9.5, -6.5, 3.8, -2.2, 1.3, -0.65, 0],
+        y: [0, -7.5, 5, -3.8, 2.2, -1.3, 0.65, 0],
+        transition: {
+          duration: 1.0,
+          delay: 0.35,
+          times: [0, 0.12, 0.25, 0.4, 0.55, 0.7, 0.85, 1],
+          ease: 'linear',
+        },
+      },
+    },
+    questlineDescriptionVariants: {
+      hidden: {
+        opacity: 0,
+        scale: 0.48,
+      },
+      visible: {
+        opacity: [0, 0.34, 1, 0.44, 0.87, 1, 0.64, 1],
+        scale: [0.48, 0.74, 0.95, 1.05, 0.94, 1.018, 0.99, 1],
+        x: [0, 7.5, -5, 2.8, -1.6, 0.9, -0.45, 0],
+        y: [0, -5.5, 4, -2.8, 1.6, -0.9, 0.45, 0],
+        transition: {
+          duration: 0.88,
+          delay: 0.55,
           times: [0, 0.12, 0.25, 0.4, 0.55, 0.7, 0.85, 1],
           ease: 'linear',
         },
@@ -1330,16 +2035,16 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
     questlineFooterVariants: {
       hidden: {
         opacity: 0,
-        scale: 0.42,
+        scale: 0.4,
       },
       visible: {
-        opacity: [0, 0.28, 1, 0.4, 0.78, 1, 0.6, 1],
-        scale: [0.42, 0.68, 0.93, 1.07, 0.91, 1.015, 0.985, 1],
-        x: [0, 6, -4, 2.2, -1.3, 0.7, -0.35, 0],
-        y: [0, -4, 3, -2, 1.3, -0.7, 0.35, 0],
+        opacity: [0, 0.3, 1, 0.41, 0.82, 1, 0.61, 1],
+        scale: [0.4, 0.69, 0.935, 1.065, 0.915, 1.02, 0.99, 1],
+        x: [0, 6.5, -4.3, 2.4, -1.4, 0.75, -0.38, 0],
+        y: [0, -4.5, 3.3, -2.4, 1.4, -0.75, 0.38, 0],
         transition: {
-          duration: 0.8,
-          delay: 1.2,
+          duration: 0.84,
+          delay: 1.1,
           times: [0, 0.12, 0.25, 0.4, 0.55, 0.7, 0.85, 1],
           ease: 'linear',
         },
@@ -1420,7 +2125,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    titleVariants: {
       hidden: {
         opacity: 0,
         y: -50,
@@ -1433,6 +2138,82 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         transition: {
           duration: 1.0,
           delay: 0.6,
+          ease: [0.16, 1.0, 0.3, 1.0],
+        },
+      },
+    },
+    footerVariants: {
+      hidden: {
+        opacity: 0,
+        y: 40,
+        scale: 0.9,
+        rotateX: 15,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotateX: 0,
+        transition: {
+          duration: 0.95,
+          delay: 1.2,
+          ease: [0.16, 1.0, 0.3, 1.0],
+        },
+      },
+    },
+    questlineHeaderImageVariants: {
+      hidden: {
+        opacity: 0,
+        y: -150,
+        scale: 0.7,
+        rotateX: -30,
+        transformPerspective: 1400,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotateX: 0,
+        transformPerspective: 1400,
+        transition: {
+          duration: 1.4,
+          delay: 0.1,
+          ease: [0.16, 1.0, 0.3, 1.0],
+        },
+      },
+    },
+    questlineTimerVariants: {
+      hidden: {
+        opacity: 0,
+        y: -70,
+        scale: 0.65,
+        rotateX: 25,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotateX: 0,
+        transition: {
+          duration: 1.25,
+          delay: 0.3,
+          ease: [0.16, 1.0, 0.3, 1.0],
+        },
+      },
+    },
+    questlineDescriptionVariants: {
+      hidden: {
+        opacity: 0,
+        y: -55,
+        rotateX: -14,
+      },
+      visible: {
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        transition: {
+          duration: 1.05,
+          delay: 0.55,
           ease: [0.16, 1.0, 0.3, 1.0],
         },
       },
@@ -1488,8 +2269,8 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         scale: 1,
         rotateX: 0,
         transition: {
-          duration: 0.95,
-          delay: 1.2,
+          duration: 1.0,
+          delay: 1.1,
           ease: [0.16, 1.0, 0.3, 1.0],
         },
       },
@@ -1513,6 +2294,22 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
       visible: { opacity: 1, transition: { duration: 0 } },
     },
     timerVariants: {
+      hidden: { opacity: 1 },
+      visible: { opacity: 1, transition: { duration: 0 } },
+    },
+    titleVariants: {
+      hidden: { opacity: 1 },
+      visible: { opacity: 1, transition: { duration: 0 } },
+    },
+    footerVariants: {
+      hidden: { opacity: 1 },
+      visible: { opacity: 1, transition: { duration: 0 } },
+    },
+    questlineHeaderImageVariants: {
+      hidden: { opacity: 1 },
+      visible: { opacity: 1, transition: { duration: 0 } },
+    },
+    questlineTimerVariants: {
       hidden: { opacity: 1 },
       visible: { opacity: 1, transition: { duration: 0 } },
     },

@@ -22,6 +22,10 @@ export interface RevealAnimation {
   itemVariants: Variants;
   headerImageVariants: Variants;
   timerVariants: Variants;
+  titleVariants: Variants;
+  footerVariants: Variants;
+  questlineHeaderImageVariants: Variants;
+  questlineTimerVariants: Variants;
   questlineDescriptionVariants: Variants;
   questlineBonusRewardsVariants: Variants;
   questlineProgressBarVariants: Variants;
@@ -29,7 +33,7 @@ export interface RevealAnimation {
 }
 
 export interface AnimationParameterConfig {
-  id: string;
+  id: string; // Changed from 'key' to 'id' to match current project
   label: string;
   description: string;
   min: number;
@@ -62,21 +66,113 @@ export interface AnimationParameters {
   orbital?: OrbitalConfig;
 }
 
+export const defaultAnimationParameters: Record<AnimationType, AnimationParameters> = {
+  'stagger-inview': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0.1,
+    delayChildren: 0.2,
+  },
+  'scale-rotate': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0.15,
+    delayChildren: 0.1,
+  },
+  'flip-reveal': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0.12,
+    delayChildren: 0.15,
+  },
+  'spring-physics': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0.08,
+    delayChildren: 0.1,
+    spring: {
+      stiffness: 200,
+      damping: 15,
+      mass: 1.0,
+    },
+  },
+  'fade-slide': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0.1,
+    delayChildren: 0.15,
+  },
+  'elastic-bounce': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0.08,
+    delayChildren: 0,
+    wobble: {
+      wobbleIntensity: 1.0,
+    },
+  },
+  'orbital-reveal': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0.12,
+    delayChildren: 0.1,
+    spring: {
+      stiffness: 120,
+      damping: 12,
+      mass: 1.0,
+    },
+    orbital: {
+      orbitDistance: 100,
+    },
+  },
+  'glitch-snap': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0.06,
+    delayChildren: 0.05,
+  },
+  'silk-unfold': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0.12,
+    delayChildren: 0.15,
+  },
+  'crystal-shimmer': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0.1,
+    delayChildren: 0.2,
+  },
+  'velvet-cascade': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0.08,
+    delayChildren: 0.25,
+  },
+  'none': {
+    durationScale: 1.0,
+    delayOffset: 0,
+    staggerChildren: 0,
+    delayChildren: 0,
+  },
+};
+
+// Synchronized with chain-offer-mock/src/types/animationParameters.ts values
 export const baseParameterConfigs: AnimationParameterConfig[] = [
   {
     id: 'durationScale',
-    label: 'Duration Scale',
-    description: 'Global speed multiplier (lower is faster)',
-    min: 0.1,
+    label: 'Duration',
+    description: 'Speed multiplier for all animations',
+    min: 0.5,
     max: 3.0,
     step: 0.1,
     defaultValue: 1.0,
   },
   {
     id: 'delayOffset',
-    label: 'Start Delay',
-    description: 'Initial delay before animation starts',
-    min: 0,
+    label: 'Delay',
+    description: 'Add or subtract delay from all animations',
+    min: -1.0,
     max: 2.0,
     step: 0.1,
     defaultValue: 0,
@@ -84,18 +180,18 @@ export const baseParameterConfigs: AnimationParameterConfig[] = [
   {
     id: 'staggerChildren',
     label: 'Stagger',
-    description: 'Time between each item appearing',
+    description: 'Time between child animations',
     min: 0,
     max: 0.5,
     step: 0.01,
-    defaultValue: 0.08,
+    defaultValue: 0.1,
   },
   {
     id: 'delayChildren',
-    label: 'Child Delay',
+    label: 'Initial Delay',
     description: 'Delay before children start animating',
     min: 0,
-    max: 1.0,
+    max: 2.0,
     step: 0.05,
     defaultValue: 0.2,
   },
@@ -105,41 +201,41 @@ export const springParameterConfigs: AnimationParameterConfig[] = [
   {
     id: 'stiffness',
     label: 'Stiffness',
-    description: 'Spring stiffness/tension',
-    min: 10,
+    description: 'Spring tension (higher = faster)',
+    min: 50,
     max: 500,
     step: 10,
-    defaultValue: 100,
+    defaultValue: 200,
   },
   {
     id: 'damping',
     label: 'Damping',
-    description: 'Opposition to motion (bounce reduction)',
+    description: 'Spring resistance (higher = less bounce)',
     min: 5,
-    max: 100,
-    step: 5,
-    defaultValue: 10,
+    max: 50,
+    step: 1,
+    defaultValue: 15,
   },
   {
     id: 'mass',
     label: 'Mass',
-    description: 'Weight of the object',
+    description: 'Object weight (higher = slower)',
     min: 0.1,
-    max: 5,
+    max: 3.0,
     step: 0.1,
-    defaultValue: 1,
+    defaultValue: 1.0,
   },
 ]
 
 export const wobbleParameterConfigs: AnimationParameterConfig[] = [
   {
     id: 'wobbleIntensity',
-    label: 'Intensity',
-    description: 'Strength of the wobble effect',
-    min: 0,
-    max: 20,
-    step: 1,
-    defaultValue: 5,
+    label: 'Wobble Intensity',
+    description: 'How extreme the wobble effect is',
+    min: 0.5,
+    max: 2.0,
+    step: 0.1,
+    defaultValue: 1.0,
   },
 ]
 
@@ -147,10 +243,10 @@ export const orbitalParameterConfigs: AnimationParameterConfig[] = [
   {
     id: 'orbitDistance',
     label: 'Orbit Distance',
-    description: 'Radius of the orbital path',
-    min: 0,
+    description: 'Size of the circular motion path',
+    min: 50,
     max: 200,
     step: 10,
-    defaultValue: 50,
+    defaultValue: 100,
   },
 ]

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { AnimationParameters, AnimationType } from '../../lib/animation/types';
+import { AnimationParameters, AnimationType, defaultAnimationParameters } from '../../lib/animation/types';
 
 interface AnimationContextType {
   parameters: Record<AnimationType, AnimationParameters>;
@@ -13,46 +13,16 @@ interface AnimationContextType {
   setAllParameters: (params: Record<AnimationType, AnimationParameters>) => void;
 }
 
-const defaultParameters: AnimationParameters = {
-  durationScale: 1.0,
-  delayOffset: 0,
-  staggerChildren: 0.08,
-  delayChildren: 0.2,
-  spring: {
-    stiffness: 100,
-    damping: 10,
-    mass: 1,
-  },
-  wobble: {
-    wobbleIntensity: 5,
-  },
-  orbital: {
-    orbitDistance: 50,
-  },
-};
-
-const defaultState: Record<AnimationType, AnimationParameters> = {
-  'stagger-inview': { ...defaultParameters },
-  'scale-rotate': { ...defaultParameters },
-  'flip-reveal': { ...defaultParameters },
-  'spring-physics': { ...defaultParameters },
-  'fade-slide': { ...defaultParameters },
-  'glitch-snap': { ...defaultParameters },
-  'silk-unfold': { ...defaultParameters },
-  'elastic-bounce': { ...defaultParameters },
-  'orbital-reveal': { ...defaultParameters },
-  'crystal-shimmer': { ...defaultParameters },
-  'velvet-cascade': { ...defaultParameters },
-  'none': { ...defaultParameters },
-};
-
 const AnimationContext = createContext<AnimationContextType | undefined>(undefined);
 
 export function AnimationParametersProvider({ children }: { children: ReactNode }) {
-  const [parameters, setParameters] = useState<Record<AnimationType, AnimationParameters>>(defaultState);
+  // Initialize with a deep clone of the default parameters to avoid mutation
+  const [parameters, setParameters] = useState<Record<AnimationType, AnimationParameters>>(() => 
+    JSON.parse(JSON.stringify(defaultAnimationParameters))
+  );
 
   const getParameters = (type: AnimationType) => {
-    return parameters[type] || defaultParameters;
+    return parameters[type] || defaultAnimationParameters[type];
   };
 
   const updateParameter = (type: AnimationType, key: keyof AnimationParameters, value: number) => {
@@ -71,7 +41,7 @@ export function AnimationParametersProvider({ children }: { children: ReactNode 
       [type]: {
         ...prev[type],
         spring: {
-          ...prev[type].spring!,
+          ...(prev[type].spring || { stiffness: 200, damping: 15, mass: 1.0 }),
           [key]: value,
         },
       },
@@ -84,7 +54,7 @@ export function AnimationParametersProvider({ children }: { children: ReactNode 
       [type]: {
         ...prev[type],
         wobble: {
-          ...prev[type].wobble!,
+          ...(prev[type].wobble || { wobbleIntensity: 1.0 }),
           [key]: value,
         },
       },
@@ -97,7 +67,7 @@ export function AnimationParametersProvider({ children }: { children: ReactNode 
       [type]: {
         ...prev[type],
         orbital: {
-          ...prev[type].orbital!,
+          ...(prev[type].orbital || { orbitDistance: 100 }),
           [key]: value,
         },
       },
@@ -107,7 +77,7 @@ export function AnimationParametersProvider({ children }: { children: ReactNode 
   const resetToDefaults = (type: AnimationType) => {
     setParameters((prev) => ({
       ...prev,
-      [type]: { ...defaultParameters },
+      [type]: JSON.parse(JSON.stringify(defaultAnimationParameters[type])),
     }));
   };
 

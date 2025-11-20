@@ -221,7 +221,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
 
     return (
       <m.div 
-        variants={animationConfig?.timerVariants}
+        variants={animationConfig?.questlineTimerVariants}
         style={{ position: 'relative', zIndex: 25, width: 0, height: 0 }}
       >
         <TimerRenderer
@@ -245,7 +245,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
 
     return (
       <m.div 
-        variants={animationConfig?.headerImageVariants} 
+        variants={animationConfig?.questlineHeaderImageVariants} 
         style={{ position: 'relative', zIndex: 20, width: 0, height: 0 }}
       >
         <HeaderRenderer
