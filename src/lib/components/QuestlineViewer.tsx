@@ -23,8 +23,15 @@
  * logic while providing callback props for external integration.
  */
 
+import { motion } from 'framer-motion';
 import React from 'react';
+import { RevealAnimation } from '../animation/types';
+import { useQuestlineState } from '../hooks/useQuestlineState';
 import { ExtractedAssets, QuestlineExport } from '../types';
+import {
+  calculateQuestlineContentBounds,
+  calculateQuestlineScale
+} from '../utils/utils';
 import './QuestlineViewer.css';
 
 // Import specialized renderer components
@@ -33,13 +40,6 @@ import { HeaderRenderer } from './renderers/HeaderRenderer';
 import { QuestRenderer } from './renderers/QuestRenderer';
 import { RewardsRenderer } from './renderers/RewardsRenderer';
 import { TimerRenderer } from './renderers/TimerRenderer';
-
-// Import separated concerns
-import { useQuestlineState } from '../hooks/useQuestlineState';
-import {
-  calculateQuestlineContentBounds,
-  calculateQuestlineScale
-} from '../utils/utils';
 
 /**
  * Component visibility configuration
@@ -79,6 +79,9 @@ interface QuestlineViewerProps {
   /** Component visibility toggles (optional, defaults to all visible) */
   componentVisibility?: Partial<ComponentVisibilityType>;
 
+  /** Configuration for reveal animation */
+  animationConfig?: RevealAnimation;
+
   /** Callback function executed when questline button is clicked */
   onButtonClick?: () => void;
 }
@@ -97,6 +100,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
   questlineHeight,
   showQuestKeys = false,
   componentVisibility = {},
+  animationConfig,
   onButtonClick
 }) => {
 
@@ -188,15 +192,20 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
       const questImage = assets?.questImages?.[quest.questKey]?.[currentState];
 
       return (
-        <QuestRenderer
-          key={quest.questKey}
-          quest={quest}
-          currentState={currentState}
-          scale={scale}
-          questImage={questImage}
-          showQuestKeys={showQuestKeys}
-          onCycleState={cycleQuestState}
-        />
+        <motion.div 
+          key={quest.questKey} 
+          variants={animationConfig?.itemVariants}
+          style={{ position: 'relative', zIndex: 10, width: 0, height: 0 }}
+        >
+          <QuestRenderer
+            quest={quest}
+            currentState={currentState}
+            scale={scale}
+            questImage={questImage}
+            showQuestKeys={showQuestKeys}
+            onCycleState={cycleQuestState}
+          />
+        </motion.div>
       );
     });
   };
@@ -211,10 +220,15 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
     if (!visibility.timer || !questlineData.timer) return null;
 
     return (
-      <TimerRenderer
-        timer={questlineData.timer}
-        scale={scale}
-      />
+      <motion.div 
+        variants={animationConfig?.timerVariants}
+        style={{ position: 'relative', zIndex: 25, width: 0, height: 0 }}
+      >
+        <TimerRenderer
+          timer={questlineData.timer}
+          scale={scale}
+        />
+      </motion.div>
     );
   };
 
@@ -230,13 +244,18 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
     const headerImage = assets?.headerImages?.[headerState];
 
     return (
-      <HeaderRenderer
-        header={questlineData.header}
-        currentState={headerState}
-        scale={scale}
-        headerImage={headerImage}
-        onCycleState={cycleHeaderState}
-      />
+      <motion.div 
+        variants={animationConfig?.headerImageVariants} 
+        style={{ position: 'relative', zIndex: 20, width: 0, height: 0 }}
+      >
+        <HeaderRenderer
+          header={questlineData.header}
+          currentState={headerState}
+          scale={scale}
+          headerImage={headerImage}
+          onCycleState={cycleHeaderState}
+        />
+      </motion.div>
     );
   };
 
@@ -252,13 +271,18 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
     const rewardsImage = assets?.rewardsImages?.[rewardsState];
 
     return (
-      <RewardsRenderer
-        rewards={questlineData.rewards}
-        currentState={rewardsState}
-        scale={scale}
-        rewardsImage={rewardsImage}
-        onCycleState={cycleRewardsState}
-      />
+      <motion.div 
+        variants={animationConfig?.questlineBonusRewardsVariants}
+        style={{ position: 'relative', zIndex: 15, width: 0, height: 0 }}
+      >
+        <RewardsRenderer
+          rewards={questlineData.rewards}
+          currentState={rewardsState}
+          scale={scale}
+          rewardsImage={rewardsImage}
+          onCycleState={cycleRewardsState}
+        />
+      </motion.div>
     );
   };
 
@@ -272,14 +296,19 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
     if (!visibility.button || !questlineData.button) return null;
 
     return (
-      <ButtonRenderer
-        button={questlineData.button}
-        currentState={buttonState}
-        scale={scale}
-        onMouseEnter={handleButtonMouseEnter}
-        onMouseLeave={handleButtonMouseLeave}
-        onClick={() => handleButtonClick(onButtonClick)}
-      />
+      <motion.div 
+        variants={animationConfig?.questlineFooterVariants}
+        style={{ position: 'relative', zIndex: 30, width: 0, height: 0 }}
+      >
+        <ButtonRenderer
+          button={questlineData.button}
+          currentState={buttonState}
+          scale={scale}
+          onMouseEnter={handleButtonMouseEnter}
+          onMouseLeave={handleButtonMouseLeave}
+          onClick={() => handleButtonClick(onButtonClick)}
+        />
+      </motion.div>
     );
   };
 
@@ -294,7 +323,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
       role="region"
       aria-label="Questline game interface"
     >
-      <div
+      <motion.div
         className="questline-viewer questline-canvas"
         role="img"
         aria-label="Interactive questline with clickable quests and components"
@@ -306,6 +335,9 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
           '--content-bounds-width': `${contentBounds.width}px`,
           '--content-bounds-height': `${contentBounds.height}px`
         } as React.CSSProperties}
+        initial="hidden"
+        animate="visible"
+        variants={animationConfig?.containerVariants}
       >
 
         {/* Content bounds indicator for debugging/development */}
@@ -330,7 +362,7 @@ export const QuestlineViewer: React.FC<QuestlineViewerProps> = ({
         {renderQuests()}
         {renderButton()}
 
-      </div>
+      </motion.div>
     </div>
   );
 };

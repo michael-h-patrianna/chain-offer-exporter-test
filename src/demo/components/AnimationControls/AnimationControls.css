@@ -1,0 +1,130 @@
+/* Animation Controls */
+.animation-parameter-form {
+  background: transparent;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.animation-parameter-form__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.animation-parameter-form__title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--pf-fg-strong);
+}
+
+.animation-parameter-form__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.animation-parameter-form__action-button {
+  background: color-mix(in srgb, var(--pf-border) 10%, var(--pf-surface));
+  border: 1px solid var(--pf-border);
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--pf-fg);
+  transition: all 0.2s ease;
+}
+
+.animation-parameter-form__action-button:hover {
+  background: color-mix(in srgb, var(--pf-border) 20%, var(--pf-surface));
+  color: var(--pf-fg-strong);
+  border-color: var(--pf-fg);
+}
+
+.animation-parameter-form__empty {
+  color: var(--pf-muted);
+  font-size: 14px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Parameter Group */
+.parameter-group {
+  margin-bottom: 20px;
+  background: color-mix(in srgb, var(--pf-border) 5%, var(--pf-surface));
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--pf-border);
+}
+
+.parameter-group__title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--pf-muted);
+  margin: 0 0 15px 0;
+  font-weight: 600;
+}
+
+/* Parameter Slider */
+.parameter-slider {
+  margin-bottom: 15px;
+}
+
+.parameter-slider:last-child {
+  margin-bottom: 0;
+}
+
+.parameter-slider__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.parameter-slider__label {
+  font-size: 0.9rem;
+  color: var(--pf-fg);
+  cursor: help;
+}
+
+.parameter-slider__value {
+  font-size: 0.85rem;
+  font-family: monospace;
+  color: var(--pf-fg-strong); /* Changed from --secondary */
+  /* Removed background color for a more neutral look */
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.parameter-slider__input {
+  width: 100%;
+  margin: 0;
+  height: 6px;
+  background: color-mix(in srgb, var(--pf-border) 20%, var(--pf-bg));
+  border-radius: 3px;
+  appearance: none;
+  outline: none;
+}
+
+.parameter-slider__input::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--pf-border); /* Changed from --secondary */
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease; /* Added background to transition */
+  box-shadow: var(--elev-inset); /* Added box-shadow */
+}
+
+.parameter-slider__input::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  background: var(--pf-fg-strong); /* Changed from a hardcoded hover */
+}

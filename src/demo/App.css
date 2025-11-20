@@ -46,25 +46,11 @@
   }
 }
 
-/* Upload Section */
-.upload-section {
-  background: var(--pf-surface);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: var(--elev-1);
-  border: 2px dashed var(--pf-border);
-  transition: border-color 0.3s ease;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.upload-section:hover {
-  border-color: color-mix(in srgb, var(--pf-border) 80%, var(--pf-fg-strong));
-}
-
+/* Upload Section Elements */
 .file-input-label {
-  display: inline-block;
+  display: block;
   cursor: pointer;
+  text-align: center;
 }
 
 .file-input-hidden {
@@ -74,20 +60,18 @@
 .file-input-button {
   display: inline-block;
   padding: 12px 24px;
-  border: 2px solid var(--pf-border);
+  border: 2px dashed var(--pf-border); /* Moved dashed border here */
   border-radius: 8px;
-  background: color-mix(in srgb, var(--pf-border) 10%, var(--pf-surface));
+  background: color-mix(in srgb, var(--pf-border) 5%, var(--pf-surface));
   cursor: pointer;
   font-size: 1rem;
   color: var(--pf-fg-strong);
   transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
   user-select: none;
 }
 
 .file-input-button:hover {
-  background: color-mix(in srgb, var(--pf-border) 20%, var(--pf-surface));
+  background: color-mix(in srgb, var(--pf-border) 15%, var(--pf-surface));
   border-color: var(--pf-fg-strong);
 }
 
@@ -100,6 +84,7 @@
   color: var(--pf-border);
   font-weight: 600;
   margin-top: 15px;
+  text-align: center;
   animation: pulse 2s infinite;
 }
 
@@ -123,23 +108,7 @@
   font-weight: 500;
 }
 
-/* Controls Section */
-.controls-section {
-  background: var(--pf-surface);
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: var(--elev-1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--pf-border);
-}
-
-.controls-section h3 {
-  margin: 0 0 20px 0;
-  color: var(--pf-fg-strong);
-  font-size: 1.3rem;
-}
-
+/* Controls Section Elements */
 .control-row {
   display: flex;
   gap: 30px;
@@ -150,6 +119,7 @@
 .control-group {
   flex: 1;
   min-width: 200px;
+  margin-bottom: 15px;
 }
 
 .control-group label {
@@ -157,6 +127,7 @@
   font-weight: 600;
   color: var(--pf-muted);
   margin-bottom: 8px;
+  font-size: 0.9rem;
 }
 
 .control-group input[type='range'] {
@@ -176,22 +147,23 @@
 
 .control-group input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: var(--pf-border);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
   box-shadow: var(--elev-inset);
 }
 
 .control-group input[type='range']::-webkit-slider-thumb:hover {
   background: var(--pf-fg-strong);
+  transform: scale(1.1);
 }
 
 .control-group input[type='range']::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: var(--pf-border);
   cursor: pointer;
@@ -235,37 +207,21 @@
   justify-self: center;
 }
 
-/* Information Section */
-.info-section {
-  background: var(--pf-surface);
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: var(--elev-1);
-  text-align: left;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--pf-border);
-}
-
-.info-section h3,
-.info-section h4 {
-  color: var(--pf-fg-strong);
-  margin: 0 0 15px 0;
-}
-
+/* Information Section Elements */
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  margin-bottom: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Tighter grid */
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .info-item {
   background: color-mix(in srgb, var(--pf-border) 10%, var(--pf-surface));
-  padding: 12px;
-  border-radius: 8px;
-  border-left: 4px solid var(--pf-border);
+  padding: 10px;
+  border-radius: 6px;
+  border-left: 3px solid var(--pf-border);
   color: var(--pf-fg);
+  font-size: 0.9rem;
 }
 
 .info-item strong {
@@ -274,7 +230,7 @@
 
 .components-list {
   display: flex;
-  gap: 15px;
+  gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 20px;
 }
@@ -282,14 +238,16 @@
 .component-toggle {
   background: color-mix(in srgb, var(--secondary) 20%, var(--pf-surface));
   color: var(--secondary);
-  padding: 8px 12px;
-  border-radius: 20px;
+  padding: 6px 10px;
+  border-radius: 6px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   border: 1px solid color-mix(in srgb, var(--secondary) 30%, transparent);
   cursor: pointer;
   transition: all 0.2s ease;
   user-select: none;
+  flex: 1 0 auto; /* Grow to fill space */
+  text-align: center;
 }
 
 .component-toggle:hover:not(:disabled) {
@@ -332,9 +290,10 @@
   background: color-mix(in srgb, #ecc94b 10%, var(--pf-surface));
   border: 1px solid color-mix(in srgb, #ecc94b 30%, transparent);
   border-radius: 8px;
-  padding: 15px;
+  padding: 12px;
   color: #ecc94b;
-  line-height: 1.6;
+  line-height: 1.5;
+  font-size: 0.9rem;
 }
 
 /* Responsive Design */
@@ -465,8 +424,8 @@
   align-self: start;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
+  gap: 0; /* Removed gap */
+  padding: 0; /* Removed padding */
   border-radius: 12px;
   background: var(--pf-surface);
   box-shadow: var(--elev-1);
@@ -475,16 +434,50 @@
   border: 1px solid var(--pf-border);
 }
 
-/* Hide desktop sidebar below 1220px */
-@media (max-width: 1219px) {
-  .app-sidebar.desktop-sidebar {
-    display: none;
-  }
+/* Sidebar Sections (Common) */
+.upload-section,
+.controls-section,
+.info-section,
+.sidebar-section {
+  background: transparent;
+  padding: 20px;
+  border: none;
+  border-bottom: 1px solid var(--pf-border);
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  margin: 0;
 }
 
-/* =============================================================================
-   DRAWER
-   ============================================================================= */
+.upload-section:last-child,
+.controls-section:last-child,
+.info-section:last-child,
+.sidebar-section:last-child {
+  border-bottom: none;
+}
+
+/* Section Headers */
+.controls-section h3,
+.info-section h3,
+.sidebar-section h3 {
+  margin: 0 0 15px 0;
+  color: var(--pf-fg-strong);
+  font-size: 1.1rem; /* Slightly smaller for density */
+  font-weight: 600;
+}
+
+/* Upload Section Specifics */
+.upload-section {
+  /* Optional: subtle highlight for upload area or keep it clean */
+}
+
+/* ... keep existing internal element styles ... */
+.file-input-label {
+  display: block; /* Full width for easier hitting */
+  text-align: center;
+  cursor: pointer;
+}
 
 .app-drawer {
   position: fixed;

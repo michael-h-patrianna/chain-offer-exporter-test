@@ -24,6 +24,7 @@ interface SidebarProps {
   onToggleComponentVisibility: (component: keyof ComponentVisibilityType) => void;
   onToggleShowQuestKeys: (show: boolean) => void;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -40,6 +41,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onToggleComponentVisibility,
   onToggleShowQuestKeys,
   className,
+  children,
 }) => {
   return (
     <aside className={`app-sidebar${className ? ` ${className}` : ''}`}>
@@ -100,6 +102,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </label>
             </div>
           </div>
+
+          {/* Custom Children (e.g. Animation Controls) */}
+          {children}
 
           {/* Information panel */}
           <div className="info-section">

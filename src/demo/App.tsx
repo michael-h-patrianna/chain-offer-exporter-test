@@ -2,17 +2,28 @@ import { ExtractedAssets } from '@lib';
 import { QuestlineViewer } from '@lib/components/QuestlineViewer';
 import { extractQuestlineZip } from '@lib/utils/zipExtractor';
 import React, { useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
+import { getAnimationOptions, getRevealAnimation } from '../lib/animation/config';
+import { AnimationType } from '../lib/animation/types';
+import { applyAnimationParameters } from '../lib/animation/utils';
 import './App.css';
+import { AnimationParameterForm } from './components/AnimationControls/AnimationParameterForm';
 import { AppBar } from './components/AppBar';
 import { Sidebar } from './components/Sidebar';
+import { AnimationParametersProvider, useAnimationParameters } from './context/AnimationContext';
 
-function App() {
+function AppContent() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [extractedAssets, setExtractedAssets] = useState<ExtractedAssets | null>(null);
   const [questlineWidth, setQuestlineWidth] = useState(375);
   const [questlineHeight, setQuestlineHeight] = useState(812);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Animation State
+  const [animationType, setAnimationType] = useState<AnimationType>('spring-physics');
+  const [replayTrigger, setReplayTrigger] = useState(0);
+  const { getParameters } = useAnimationParameters();
 
   // Component visibility state
   const [componentVisibility, setComponentVisibility] = useState({
@@ -27,11 +38,20 @@ function App() {
   // Quest key display state
   const [showQuestKeys, setShowQuestKeys] = useState(false);
 
+  // Compute Animation Config
+  const baseAnimation = getRevealAnimation(animationType);
+  const parameters = getParameters(animationType);
+  const animationConfig = applyAnimationParameters(baseAnimation, parameters);
+
   const toggleComponentVisibility = (component: keyof typeof componentVisibility) => {
     setComponentVisibility((prev) => ({
       ...prev,
       [component]: !prev[component],
     }));
+  };
+
+  const handleReplay = () => {
+    setReplayTrigger(prev => prev + 1);
   };
 
   // Auto-load theme.zip if it exists in public/assets
@@ -41,38 +61,28 @@ function App() {
         setIsLoading(true);
         setError(null);
 
-        // Attempt to fetch the theme.zip file
         const response = await fetch('/assets/theme.zip');
+        if (!response.ok) return;
 
-        if (!response.ok) {
-          // Theme file doesn't exist, silently continue
-          return;
-        }
-
-        // Convert response to blob and then to File
         const blob = await response.blob();
         const file = new File([blob], 'theme.zip', { type: 'application/zip' });
 
-        // Load the theme using the same logic as handleFileUpload
         const assets = await extractQuestlineZip(file);
         setExtractedAssets(assets);
 
-        // Auto-set questline dimensions to match the original frame size
         const frameWidth = assets.questlineData.frameSize?.width || 375;
         const frameHeight = assets.questlineData.frameSize?.height || 812;
         setQuestlineWidth(frameWidth);
         setQuestlineHeight(frameHeight);
       } catch (err) {
-        // Silently fail if theme doesn't exist or can't be loaded
-        // No action needed - user can still upload their own theme
-        console.warn('Theme auto-load failed (this is normal if no theme.zip exists):', err);
+        console.warn('Theme auto-load failed:', err);
       } finally {
         setIsLoading(false);
       }
     };
 
     autoLoadTheme();
-  }, []); // Only run once on mount
+  }, []);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -85,7 +95,6 @@ function App() {
       const assets = await extractQuestlineZip(file);
       setExtractedAssets(assets);
 
-      // Auto-set questline dimensions to match the original frame size
       const frameWidth = assets.questlineData.frameSize?.width || 375;
       const frameHeight = assets.questlineData.frameSize?.height || 812;
       setQuestlineWidth(frameWidth);
@@ -118,9 +127,10 @@ function App() {
     }
   }, [isDrawerOpen]);
 
+  const animationOptions = getAnimationOptions();
+
   return (
     <div className="App">
-      {/* App Bar (Mobile Header) */}
       <AppBar
         onMenuClick={() => setIsDrawerOpen(true)}
         title="Questline Demo"
@@ -144,19 +154,51 @@ function App() {
             onToggleComponentVisibility={toggleComponentVisibility}
             onToggleShowQuestKeys={setShowQuestKeys}
             className="desktop-sidebar"
-          />
-
+          >
+            {extractedAssets && (
+              <div className="sidebar-section animation-section">
+                 <h3>Reveal Animation</h3>
+                 <div className="control-group">
+                   <label>
+                     Animation Type
+                     <select
+                       value={animationType}
+                       onChange={(e) => setAnimationType(e.target.value as AnimationType)}
+                       style={{ width: '100%', padding: '8px', marginTop: '4px', borderRadius: '4px', border: '1px solid #ced4da' }}
+                     >
+                       {animationOptions.map((opt) => (
+                         <option key={opt.value} value={opt.value}>
+                           {opt.label}
+                         </option>
+                       ))}
+                     </select>
+                   </label>
+                 </div>
+                 <AnimationParameterForm 
+                    animationType={animationType}
+                    onAnimationTypeChange={setAnimationType}
+                    onReplay={handleReplay}
+                 />
+              </div>
+            )}
+          </Sidebar>
           {/* Main Content Area */}
           <div className="main-content">
             {extractedAssets && (
               <div className="questline-container">
+                {/* Key Change: We remount the component when animation type changes to trigger enter animation again if needed, 
+                    or we rely on key prop. Framer Motion's 'initial' prop only runs on mount. 
+                    To re-run animation when config changes (if desired), we can use a key on the wrapper. 
+                */}
                 <QuestlineViewer
+                  key={`${animationType}-${replayTrigger}-${JSON.stringify(parameters)}`} /* Re-mount on param change or replay */
                   questlineData={extractedAssets.questlineData}
                   assets={extractedAssets}
                   questlineWidth={questlineWidth}
                   questlineHeight={questlineHeight}
                   componentVisibility={componentVisibility}
                   showQuestKeys={showQuestKeys}
+                  animationConfig={animationConfig}
                 />
               </div>
             )}
@@ -182,17 +224,7 @@ function App() {
               aria-label="Close menu"
               onClick={() => setIsDrawerOpen(false)}
             >
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
@@ -212,10 +244,46 @@ function App() {
             onToggleComponentVisibility={toggleComponentVisibility}
             onToggleShowQuestKeys={setShowQuestKeys}
             className="drawer-sidebar"
-          />
+          >
+            {extractedAssets && (
+              <div style={{ marginBottom: '20px' }}>
+                 <h3>Reveal Animation</h3>
+                 <div className="control-group">
+                   <label>
+                     Animation Type
+                     <select
+                       value={animationType}
+                       onChange={(e) => setAnimationType(e.target.value as AnimationType)}
+                       style={{ width: '100%', padding: '8px', marginTop: '4px', borderRadius: '4px', border: '1px solid #ced4da' }}
+                     >
+                       {animationOptions.map((opt) => (
+                         <option key={opt.value} value={opt.value}>
+                           {opt.label}
+                         </option>
+                       ))}
+                     </select>
+                   </label>
+                 </div>
+                 <AnimationParameterForm 
+                    animationType={animationType}
+                    onAnimationTypeChange={setAnimationType}
+                    onReplay={handleReplay}
+                 />
+              </div>
+            )}
+          </Sidebar>
         </div>
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AnimationParametersProvider>
+      <AppContent />
+      <Toaster position="bottom-right" />
+    </AnimationParametersProvider>
   );
 }
 
