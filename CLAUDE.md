@@ -44,10 +44,8 @@ Coding agents must follow `docs/meta/styleguide.md` - No exceptions!
 - `environmentMatchGlobs` - Restricts heavy JSDOM to UI tests only
 
 ### Before Changing Test Configuration
-1. **READ**: `docs/TEST_MEMORY_MANAGEMENT.md` (comprehensive guide)
-2. **MONITOR**: Run `node scripts/tools/monitor-test-memory.mjs` while testing
-3. **VERIFY**: Worker count stays ≤ 4, total memory < 2GB
-4. **DOCUMENT**: Update guide if making configuration changes
+1. **VERIFY**: Worker count stays ≤ 4, total memory < 2GB
+2. **DOCUMENT**: Update guide if making configuration changes
 
 ### Writing Memory-Safe Tests
 - **DON'T**: Generate 1000+ data points in a single test without batching
@@ -126,9 +124,6 @@ When implementing visual effects or animations:
 === AGENT SELECTION GUIDE [CIB-002] ===
 
 ## When to Choose Which Agent
-
-### Physics & Simulation
-**physics-engine-specialist**: trajectory, collision, physics simulation, deterministic behavior, RNG, overlap detection, numerical stability
 
 ### Code Quality & Structure
 **typescript-guardian**: type safety, generics, type definitions, eliminating 'any', strict mode
