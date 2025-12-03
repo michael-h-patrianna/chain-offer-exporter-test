@@ -1,260 +1,127 @@
-# ChainOffer Demo - Developer Learning Project
+# Chain Offer Viewer
 
-This project is a **comprehensive learning resource** for developers who need to understand chainoffer concepts and build their own chainoffer viewers using actual database data. Rather than copying code directly, developers should study this implementation to understand the underlying patterns and data flows.
+**Chain Offer Viewer** is a high-performance React library for rendering interactive "Chain Offer" components exported from design tools like Figma. This project demonstrates the reference implementation for parsing, scaling, and rendering these dynamic UI elements.
 
-## 🎯 Purpose & Target Audience
+## Prerequisites
 
-**This demo is designed for:**
-- Developers building chainoffer systems for production websites
-- Teams integrating chainoffer data from databases into React applications
-- Anyone needing to understand chainoffer state management, positioning, and rewards systems
+- Node.js 18+ (Verified on v20.x)
+- npm 9+
 
-**Key Learning Goals:**
-- Understand how chainoffer data flows from source to display
-- Learn quest state management patterns (locked → active → unclaimed → completed)
-- Comprehend reward system implementation and state cycling
-- Grasp positioning systems for different component types
-- Master responsive scaling and layout calculations
+## Quick Start
 
-## 🏗️ Architecture Overview - Separation of Concerns
+### Installation
 
-This project demonstrates **strict separation of concerns** to help developers quickly understand specific concepts:
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd chain-offer-test
+   ```
 
-### 📁 State Management Layer
-**Location:** `/src/hooks/useChainOfferState.ts`
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-**What to study here:**
-- How quest progression states are managed
-- Component state cycling logic (header, rewards, button states)
-- Interactive state patterns for buttons (hover, click, active)
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+   The demo will open at `http://localhost:5173`.
 
-```typescript
-// Example: Understanding quest state cycling
-const cycleQuestState = (questKey: string) => {
-  // locked → active → unclaimed → completed → locked (loops)
-}
+## Core Concepts
+
+This library operates on a strict separation of concerns to ensure maintainability and performance.
+
+### 1. The Viewer (`ChainOfferViewer`)
+The central component orchestrates the rendering. It handles:
+- **Responsive Scaling:** Automatically adjusts the offer chain to fit the target container while preserving aspect ratios.
+- **Layer Management:** Coordinates the z-indexing of headers, timers, offers, and buttons.
+- **State Delegation:** Delegates state management to specialized hooks.
+
+### 2. State Management (`useChainOfferState`)
+A dedicated hook manages the complex state machine:
+- **Offers:** Locked → Unlocked → Claimed.
+- **Header:** active → success → fail.
+- **Buttons:** default ↔ hover ↔ active.
+
+### 3. Data-Driven Architecture
+The UI is generated entirely from a JSON specification (`ChainOfferExport`) and a set of assets (images). This allows designers to iterate on the look and feel in Figma without requiring code changes.
+
+## Integration Guide
+
+### Basic Usage
+
+To use the `ChainOfferViewer` in your application:
+
+```tsx
+import { ChainOfferViewer } from './lib/components/ChainOfferViewer';
+import { useChainOfferData } from './hooks/useChainOfferData'; // Your data loading hook
+
+export const MyOfferPage = () => {
+  // Load your data (implementation depends on your backend)
+  const { data, assets, isLoading } = useChainOfferData();
+
+  if (isLoading || !data || !assets) return <div>Loading...</div>;
+
+  return (
+    <div style={{ width: '100%', height: '100vh' }}>
+      <ChainOfferViewer
+        chainOfferData={data}
+        assets={assets}
+        width={window.innerWidth}
+        height={window.innerHeight}
+        onButtonClick={(offerKey) => console.log(`Clicked: ${offerKey}`)}
+      />
+    </div>
+  );
+};
 ```
 
-### 📁 Data Transformation Layer
-**Location:** `/src/utils/chainofferDataTransform.ts`
+### Props Reference
 
-**What to study here:**
-- How Figma export data maps to React component props
-- Different positioning systems (top-left, center, center-X + bottom-Y)
-- Responsive scaling calculations
-- Style property conversion (Figma fills → CSS)
+| Prop | Type | Description |
+|------|------|-------------|
+| `chainOfferData` | `ChainOfferExport` | The JSON structure defining the offers. |
+| `assets` | `ExtractedAssets` | Map of image URLs for all states. |
+| `width` | `number` | Target width for rendering. |
+| `height` | `number` | Target height for rendering. |
+| `onButtonClick` | `(key: string) => void` | Callback for button interactions. |
+| `showOfferKeys` | `boolean` | (Optional) Debug overlay showing offer IDs. |
 
-```typescript
-// Example: Understanding position system differences
-convertQuestPosition()    // Uses top-left coordinates (x,y = corner)
-convertTimerPosition()    // Uses center coordinates (x,y = center point)
-convertHeaderPosition()   // Uses center-X, bottom-Y coordinates
+## Development
+
+### Running Tests
+
+We use **Vitest** for unit tests and **Playwright** for E2E tests.
+
+**Unit Tests:**
+```bash
+npm test
 ```
 
-### 📁 Rendering Layer
-**Location:** `/src/components/`
-
-**What to study here:**
-- Pure display logic without state management
-- Component-specific rendering patterns
-- Fallback rendering when assets are missing
-- CSS custom properties for performance
-
-### 📁 Data Processing Layer
-**Location:** `/src/utils/zipExtractor.ts`
-
-**What to study here:**
-- How exported chainoffer data is processed
-- Asset extraction and URL management
-- Error handling for missing or corrupted data
-
-## 🎮 Quest System Concepts
-
-### Quest States & Progression
+**End-to-End Tests:**
+```bash
+npm run test:e2e
 ```
-locked → active → unclaimed → completed
-  ↑                               ↓
-  ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ← ←
-```
+_Note: Ensure the dev server is not running on port 5173 before starting E2E tests, or configure Playwright to reuse the existing server._
 
-**State Meanings:**
-- **locked**: Quest not accessible yet
-- **active**: Quest available for completion
-- **unclaimed**: Quest completed but rewards not claimed
-- **completed**: Quest fully finished and rewards claimed
+### Project Structure
 
-### Component States
+- `src/lib/components`: Core UI components.
+- `src/lib/hooks`: State logic and custom hooks.
+- `src/lib/utils`: Data transformation and scaling logic.
+- `src/demo`: Example application showing the viewer in action.
 
-**Header States:** `active → success → fail`
-- Used for overall chainoffer status indication
+## Troubleshooting
 
-**Rewards States:** `active → fail → claimed`
-- Manages reward availability and claiming status
+### Common Issues
 
-**Button States:** `default ↔ hover ↔ active`
-- Handles interactive feedback for primary actions
+**Images not loading?**
+*   **Symptom:** Placeholder or broken image icons.
+*   **Cause:** The `assets` object keys might not match the `chainOfferData` offer keys.
+*   **Solution:** Verify that your `zipExtractor` logic correctly maps filenames to the expected keys in `src/lib/types.ts`.
 
-## 🎨 Positioning Systems Explained
-
-Different chainoffer components use different coordinate systems based on their design needs:
-
-### 1. Quest Components - Center Positioning
-```typescript
-// centerX,centerY represents the center point of the component
-{ centerX: 100, centerY: 50, width: 80, height: 60 }
-```
-**Use case:** Quest components that need to be centered at specific points
-
-### 2. Timer & Button Components - Center Positioning
-```typescript
-// x,y represents the center point of the component
-{ x: 400, y: 300 } // Component centers at this point
-```
-**Use case:** Components that need to be centered regardless of content size
-
-### 3. Header Components - Center Positioning
-```typescript
-// centerX,centerY = center point in both dimensions
-{ centerX: 400, centerY: 100 }
-```
-**Use case:** Headers that need to be centered perfectly in their area
-
-### 4. Rewards Components - True Center Positioning
-```typescript
-// centerX, centerY = center point in both dimensions
-{ centerX: 400, centerY: 300 }
-```
-**Use case:** Rewards that float and center perfectly in their area
-
-## 💰 Rewards System Implementation
-
-The rewards system demonstrates a three-state progression:
-
-```typescript
-// Rewards state flow
-'active'   // Rewards available for claiming
-    ↓
-'fail'     // Claiming failed (timeout, error, etc.)
-    ↓
-'claimed'  // Successfully claimed
-    ↓
-'active'   // Ready for next reward cycle
-```
-
-**Study Points:**
-- State management in `useChainOfferState.ts`
-- Visual rendering in `RewardsRenderer.tsx`
-- Fallback colors in `chainofferDataTransform.ts`
-
-## 📐 Responsive Scaling Logic
-
-The chainoffer viewer automatically scales content while maintaining aspect ratios:
-
-```typescript
-// Core scaling calculation
-const scaleX = targetWidth / originalWidth;
-const scaleY = targetHeight / originalHeight;
-const scale = Math.min(scaleX, scaleY); // Uniform scaling
-```
-
-**Key Concepts:**
-- Uniform scaling prevents distortion
-- Component positions scale proportionally
-- Content bounds calculation handles overflow
-- CSS custom properties enable efficient scaling
-
-## 🔧 Data Flow Architecture
-
-```
-ZIP File → Extract Assets → Transform Data → Render Components
-    ↓           ↓              ↓              ↓
-zipExtractor → chainofferData → positioning → visual display
-```
-
-**Study the flow:**
-1. **ZIP Processing** (`zipExtractor.ts`): Extract images and JSON data
-2. **Data Transformation** (`chainofferDataTransform.ts`): Convert to render-ready format
-3. **State Management** (`useChainOfferState.ts`): Handle interactive states
-4. **Component Rendering** (Renderer components): Display with styling
-
-## 🛠️ Quick Start for Developers
-
-### Understanding Specific Concepts
-
-**"How do rewards work?"**
-1. Read `useChainOfferState.ts` - reward state cycling logic
-2. Read `RewardsRenderer.tsx` - visual presentation
-3. Read `chainofferDataTransform.ts` - state color mapping
-
-**"How does quest positioning work?"**
-1. Read `chainofferDataTransform.ts` - position conversion functions
-2. Read `QuestRenderer.tsx` - CSS custom properties usage
-3. Read `ChainOfferViewer.tsx` - scaling calculations
-
-**"How are different component states handled?"**
-1. Study the state objects in `types.ts`
-2. Follow state cycling in `useChainOfferState.ts`
-3. See visual representation in individual renderer components
-
-### Integration Patterns
-
-**Using chainoffer concepts in your own app:**
-```typescript
-// Pattern 1: State management
-const [questStates, setQuestStates] = useState<Record<string, QuestState>>({});
-
-// Pattern 2: Position conversion
-const cssProperties = convertQuestPosition(questBounds, currentScale);
-
-// Pattern 3: Component coordination
-const renderComponents = () => quests.map(quest =>
-  <YourQuestComponent key={quest.id} {...questProps} />
-);
-```
-
-## 📚 Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Layout looks distorted?**
+*   **Symptom:** Elements are stretched or overlapping.
+*   **Cause:** The `width` and `height` props passed to `ChainOfferViewer` might not match the aspect ratio of the original design.
+*   **Solution:** The viewer attempts to "contain" the design. Ensure your container has a defined size.
