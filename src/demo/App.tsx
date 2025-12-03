@@ -1,6 +1,6 @@
 import { ExtractedAssets } from '@lib';
-import { QuestlineViewer } from '@lib/components/QuestlineViewer';
-import { extractQuestlineZip } from '@lib/utils/zipExtractor';
+import { ChainOfferViewer } from '@lib/components/ChainOfferViewer';
+import { extractChainOfferZip, revokeChainOfferAssets } from '@lib/utils/zipExtractor';
 import React, { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { getAnimationOptions, getRevealAnimation } from '../lib/animation/config';
@@ -15,8 +15,8 @@ import { AnimationParametersProvider, useAnimationParameters } from './context/A
 function AppContent() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [extractedAssets, setExtractedAssets] = useState<ExtractedAssets | null>(null);
-  const [questlineWidth, setQuestlineWidth] = useState(375);
-  const [questlineHeight, setQuestlineHeight] = useState(812);
+  const [width, setWidth] = useState(375);
+  const [height, setHeight] = useState(812);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -29,19 +29,27 @@ function AppContent() {
   const [componentVisibility, setComponentVisibility] = useState({
     background: true,
     header: true,
-    quests: true,
-    rewards: true,
+    offers: true,
     timer: true,
-    button: true,
+    buttons: true,
   });
 
-  // Quest key display state
-  const [showQuestKeys, setShowQuestKeys] = useState(false);
+  // Offer key display state
+  const [showOfferKeys, setShowOfferKeys] = useState(false);
 
   // Compute Animation Config
   const baseAnimation = getRevealAnimation(animationType);
   const parameters = getParameters(animationType);
   const animationConfig = applyAnimationParameters(baseAnimation, parameters);
+
+  // Asset Cleanup Effect
+  useEffect(() => {
+    return () => {
+      if (extractedAssets) {
+        revokeChainOfferAssets(extractedAssets);
+      }
+    };
+  }, [extractedAssets]);
 
   const toggleComponentVisibility = (component: keyof typeof componentVisibility) => {
     setComponentVisibility((prev) => ({
@@ -67,13 +75,13 @@ function AppContent() {
         const blob = await response.blob();
         const file = new File([blob], 'theme.zip', { type: 'application/zip' });
 
-        const assets = await extractQuestlineZip(file);
+        const assets = await extractChainOfferZip(file);
         setExtractedAssets(assets);
 
-        const frameWidth = assets.questlineData.frameSize?.width || 375;
-        const frameHeight = assets.questlineData.frameSize?.height || 812;
-        setQuestlineWidth(frameWidth);
-        setQuestlineHeight(frameHeight);
+        const frameWidth = assets.chainOfferData.frameSize?.width || 375;
+        const frameHeight = assets.chainOfferData.frameSize?.height || 812;
+        setWidth(frameWidth);
+        setHeight(frameHeight);
       } catch (err) {
         console.warn('Theme auto-load failed:', err);
       } finally {
@@ -92,13 +100,13 @@ function AppContent() {
       setError(null);
       setIsLoading(true);
 
-      const assets = await extractQuestlineZip(file);
+      const assets = await extractChainOfferZip(file);
       setExtractedAssets(assets);
 
-      const frameWidth = assets.questlineData.frameSize?.width || 375;
-      const frameHeight = assets.questlineData.frameSize?.height || 812;
-      setQuestlineWidth(frameWidth);
-      setQuestlineHeight(frameHeight);
+      const frameWidth = assets.chainOfferData.frameSize?.width || 375;
+      const frameHeight = assets.chainOfferData.frameSize?.height || 812;
+      setWidth(frameWidth);
+      setHeight(frameHeight);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to extract ZIP file');
     } finally {
@@ -133,8 +141,8 @@ function AppContent() {
     <div className="App">
       <AppBar
         onMenuClick={() => setIsDrawerOpen(true)}
-        title="Questline Demo"
-        githubUrl="https://github.com/michael-h-patrianna/questline-exporter-test"
+        title="Chain Offer Demo"
+        githubUrl="https://github.com/michael-h-patrianna/chainoffer-exporter-test"
       />
 
       <main className="App-main">
@@ -144,15 +152,15 @@ function AppContent() {
             extractedAssets={extractedAssets}
             isLoading={isLoading}
             error={error}
-            questlineWidth={questlineWidth}
-            questlineHeight={questlineHeight}
+            chainofferWidth={width}
+            chainofferHeight={height}
             componentVisibility={componentVisibility}
-            showQuestKeys={showQuestKeys}
+            showQuestKeys={showOfferKeys}
             onFileUpload={handleFileUpload}
-            onQuestlineWidthChange={setQuestlineWidth}
-            onQuestlineHeightChange={setQuestlineHeight}
+            onChainOfferWidthChange={setWidth}
+            onChainOfferHeightChange={setHeight}
             onToggleComponentVisibility={toggleComponentVisibility}
-            onToggleShowQuestKeys={setShowQuestKeys}
+            onToggleShowQuestKeys={setShowOfferKeys}
             className="desktop-sidebar"
           >
             {extractedAssets && (
@@ -174,7 +182,7 @@ function AppContent() {
                      </select>
                    </label>
                  </div>
-                 <AnimationParameterForm 
+                 <AnimationParameterForm
                     animationType={animationType}
                     onAnimationTypeChange={setAnimationType}
                     onReplay={handleReplay}
@@ -185,19 +193,19 @@ function AppContent() {
           {/* Main Content Area */}
           <div className="main-content">
             {extractedAssets && (
-              <div className="questline-container">
-                {/* Key Change: We remount the component when animation type changes to trigger enter animation again if needed, 
-                    or we rely on key prop. Framer Motion's 'initial' prop only runs on mount. 
-                    To re-run animation when config changes (if desired), we can use a key on the wrapper. 
+              <div className="chainoffer-container">
+                {/* Key Change: We remount the component when animation type changes to trigger enter animation again if needed,
+                    or we rely on key prop. Framer Motion's 'initial' prop only runs on mount.
+                    To re-run animation when config changes (if desired), we can use a key on the wrapper.
                 */}
-                <QuestlineViewer
+                <ChainOfferViewer
                   key={`${animationType}-${replayTrigger}-${JSON.stringify(parameters)}`} /* Re-mount on param change or replay */
-                  questlineData={extractedAssets.questlineData}
+                  chainOfferData={extractedAssets.chainOfferData}
                   assets={extractedAssets}
-                  questlineWidth={questlineWidth}
-                  questlineHeight={questlineHeight}
+                  width={width}
+                  height={height}
                   componentVisibility={componentVisibility}
-                  showQuestKeys={showQuestKeys}
+                  showOfferKeys={showOfferKeys}
                   animationConfig={animationConfig}
                 />
               </div>
@@ -234,15 +242,15 @@ function AppContent() {
             extractedAssets={extractedAssets}
             isLoading={isLoading}
             error={error}
-            questlineWidth={questlineWidth}
-            questlineHeight={questlineHeight}
+            chainofferWidth={width}
+            chainofferHeight={height}
             componentVisibility={componentVisibility}
-            showQuestKeys={showQuestKeys}
+            showQuestKeys={showOfferKeys}
             onFileUpload={handleFileUpload}
-            onQuestlineWidthChange={setQuestlineWidth}
-            onQuestlineHeightChange={setQuestlineHeight}
+            onChainOfferWidthChange={setWidth}
+            onChainOfferHeightChange={setHeight}
             onToggleComponentVisibility={toggleComponentVisibility}
-            onToggleShowQuestKeys={setShowQuestKeys}
+            onToggleShowQuestKeys={setShowOfferKeys}
             className="drawer-sidebar"
           >
             {extractedAssets && (
@@ -264,7 +272,7 @@ function AppContent() {
                      </select>
                    </label>
                  </div>
-                 <AnimationParameterForm 
+                 <AnimationParameterForm
                     animationType={animationType}
                     onAnimationTypeChange={setAnimationType}
                     onReplay={handleReplay}

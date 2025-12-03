@@ -3,7 +3,7 @@
  */
 
 import type { DropShadow, Fill } from '../../types';
-import { calculateQuestlineScale, convertFillToCSS, convertShadowsToCSS } from '../utils';
+import { calculateChainOfferScale, convertFillToCSS, convertShadowsToCSS } from '../utils';
 
 describe('Consolidated Utils', () => {
   describe('convertFillToCSS', () => {
@@ -34,7 +34,7 @@ describe('Consolidated Utils', () => {
       expect(result).toBe('linear-gradient(45deg, #ff0000 0.0%, #00ff00 100.0%)');
     });
 
-    it('should convert radial gradient to CSS', () => {
+    it('should return transparent for forbidden radial gradient', () => {
       const gradientFill: Fill = {
         type: 'gradient',
         gradient: {
@@ -47,7 +47,7 @@ describe('Consolidated Utils', () => {
       };
 
       const result = convertFillToCSS(gradientFill);
-      expect(result).toBe('radial-gradient(circle, #ff0000 0.0%, #0000ff 100.0%)');
+      expect(result).toBe('transparent');
     });
 
     it('should return transparent for invalid fills', () => {
@@ -100,12 +100,12 @@ describe('Consolidated Utils', () => {
     });
   });
 
-  describe('calculateQuestlineScale', () => {
+  describe('calculateChainOfferScale', () => {
     it('should calculate correct scale for fitting within container', () => {
       const originalSize = { width: 800, height: 600 };
       const targetSize = { width: 400, height: 300 };
 
-      const result = calculateQuestlineScale(originalSize, targetSize);
+      const result = calculateChainOfferScale(originalSize, targetSize);
 
       expect(result.scale).toBe(0.5); // min(400/800, 300/600) = 0.5
       expect(result.scaledWidth).toBe(400);
@@ -116,7 +116,7 @@ describe('Consolidated Utils', () => {
       const originalSize = { width: 100, height: 100 };
       const targetSize = { width: 300, height: 200 };
 
-      const result = calculateQuestlineScale(originalSize, targetSize);
+      const result = calculateChainOfferScale(originalSize, targetSize);
 
       expect(result.scale).toBe(2.0); // min(300/100, 200/100) = 2.0
       expect(result.scaledWidth).toBe(200);

@@ -1,5 +1,5 @@
 /**
- * Design Tokens for Questline Component Library
+ * Design Tokens for ChainOffer Component Library
  *
  * These tokens are designed to be cross-platform compatible with both
  * React (web) and React Native implementations.

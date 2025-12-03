@@ -1,5 +1,4 @@
-import { RevealAnimation } from './types';
-import { AnimationParameters } from './types';
+import { AnimationParameters, RevealAnimation } from './types';
 
 /**
  * Deep clone and apply parameters to animation variants
@@ -20,12 +19,28 @@ export function applyAnimationParameters(
     timerVariants: applyToVariant(cloned.timerVariants, parameters, false),
     titleVariants: applyToVariant(cloned.titleVariants, parameters, false),
     footerVariants: applyToVariant(cloned.footerVariants, parameters, false),
-    questlineHeaderImageVariants: applyToVariant(cloned.questlineHeaderImageVariants, parameters, false),
-    questlineTimerVariants: applyToVariant(cloned.questlineTimerVariants, parameters, false),
-    questlineDescriptionVariants: applyToVariant(cloned.questlineDescriptionVariants, parameters, false),
-    questlineBonusRewardsVariants: applyToVariant(cloned.questlineBonusRewardsVariants, parameters, false),
-    questlineProgressBarVariants: applyToVariant(cloned.questlineProgressBarVariants, parameters, false),
-    questlineFooterVariants: applyToVariant(cloned.questlineFooterVariants, parameters, false),
+    chainofferHeaderImageVariants: applyToVariant(
+      cloned.chainofferHeaderImageVariants,
+      parameters,
+      false
+    ),
+    chainofferTimerVariants: applyToVariant(cloned.chainofferTimerVariants, parameters, false),
+    chainofferDescriptionVariants: applyToVariant(
+      cloned.chainofferDescriptionVariants,
+      parameters,
+      false
+    ),
+    chainofferBonusRewardsVariants: applyToVariant(
+      cloned.chainofferBonusRewardsVariants,
+      parameters,
+      false
+    ),
+    chainofferProgressBarVariants: applyToVariant(
+      cloned.chainofferProgressBarVariants,
+      parameters,
+      false
+    ),
+    chainofferFooterVariants: applyToVariant(cloned.chainofferFooterVariants, parameters, false),
   };
 }
 
@@ -117,7 +132,11 @@ function applyToState(state: any, parameters: AnimationParameters, isContainer: 
 /**
  * Apply parameters to a transition object
  */
-function applyToTransition(transition: any, parameters: AnimationParameters, isContainer: boolean): any {
+function applyToTransition(
+  transition: any,
+  parameters: AnimationParameters,
+  isContainer: boolean
+): any {
   if (!transition || typeof transition !== 'object') {
     return transition;
   }

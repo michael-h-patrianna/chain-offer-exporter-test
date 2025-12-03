@@ -1,6 +1,6 @@
 import { Variants } from 'framer-motion';
 
-export type AnimationType = 
+export type AnimationType =
   | 'stagger-inview'
   | 'scale-rotate'
   | 'flip-reveal'
@@ -24,12 +24,12 @@ export interface RevealAnimation {
   timerVariants: Variants;
   titleVariants: Variants;
   footerVariants: Variants;
-  questlineHeaderImageVariants: Variants;
-  questlineTimerVariants: Variants;
-  questlineDescriptionVariants: Variants;
-  questlineBonusRewardsVariants: Variants;
-  questlineProgressBarVariants: Variants;
-  questlineFooterVariants: Variants;
+  chainofferHeaderImageVariants: Variants;
+  chainofferTimerVariants: Variants;
+  chainofferDescriptionVariants: Variants;
+  chainofferBonusRewardsVariants: Variants;
+  chainofferProgressBarVariants: Variants;
+  chainofferFooterVariants: Variants;
 }
 
 export interface AnimationParameterConfig {
@@ -149,7 +149,7 @@ export const defaultAnimationParameters: Record<AnimationType, AnimationParamete
     staggerChildren: 0.08,
     delayChildren: 0.25,
   },
-  'none': {
+  none: {
     durationScale: 1.0,
     delayOffset: 0,
     staggerChildren: 0,
@@ -195,7 +195,7 @@ export const baseParameterConfigs: AnimationParameterConfig[] = [
     step: 0.05,
     defaultValue: 0.2,
   },
-]
+];
 
 export const springParameterConfigs: AnimationParameterConfig[] = [
   {
@@ -225,7 +225,7 @@ export const springParameterConfigs: AnimationParameterConfig[] = [
     step: 0.1,
     defaultValue: 1.0,
   },
-]
+];
 
 export const wobbleParameterConfigs: AnimationParameterConfig[] = [
   {
@@ -237,7 +237,7 @@ export const wobbleParameterConfigs: AnimationParameterConfig[] = [
     step: 0.1,
     defaultValue: 1.0,
   },
-]
+];
 
 export const orbitalParameterConfigs: AnimationParameterConfig[] = [
   {
@@ -249,4 +249,4 @@ export const orbitalParameterConfigs: AnimationParameterConfig[] = [
     step: 10,
     defaultValue: 100,
   },
-]
+];

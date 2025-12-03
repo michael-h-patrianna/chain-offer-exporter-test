@@ -1,9 +1,8 @@
-// Core types for the new questline format
+// Core types for the new Chain Offer format
 
 // Component state types
-export type QuestState = 'locked' | 'active' | 'unclaimed' | 'completed';
+export type OfferState = 'Locked' | 'Unlocked' | 'Claimed';
 export type HeaderState = 'active' | 'success' | 'fail';
-export type RewardsState = 'active' | 'fail' | 'claimed' | 'unclaimed';
 export type ButtonState = 'default' | 'disabled' | 'hover' | 'active';
 
 // Fill and styling types
@@ -37,27 +36,27 @@ export interface Stroke {
   color: string;
 }
 
-// Quest component with state-based bounds
-export interface Quest {
-  questKey: string;
+// Offer component with state-based bounds
+export interface Offer {
+  offerKey: string;
   stateBounds: {
-    locked: ImageBounds;
-    active: ImageBounds;
-    unclaimed: ImageBounds;
-    completed: ImageBounds;
+    Locked: ImageBounds;
+    Unlocked: ImageBounds;
+    Claimed: ImageBounds;
   };
   lockedImg?: string;
-  activeImg?: string;
-  unclaimedImg?: string;
-  completedImg?: string;
+  unlockedImg?: string;
+  claimedImg?: string;
 }
 
 // Base interface for image-based component positioning
 export interface ImageBounds {
   x: number;
   y: number;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
+  w?: number; // Alternative for width
+  h?: number; // Alternative for height
   rotation?: number;
 }
 
@@ -104,22 +103,15 @@ export interface HeaderComponent {
   failImg: string;
 }
 
-// Rewards component
-export interface RewardsComponent {
-  stateBounds: {
-    active: ImageBounds;
-    fail: ImageBounds;
-    claimed: ImageBounds;
-    unclaimed: ImageBounds;
-  };
-  activeImg: string;
-  failImg: string;
-  claimedImg: string;
-  unclaimedImg: string;
+// Button icon definition
+export interface ButtonIcon {
+  bounds: ImageBounds;
+  img: string;
 }
 
 // Button component
 export interface ButtonComponent {
+  offerKey: string;
   position: {
     x: number;
     y: number;
@@ -130,6 +122,7 @@ export interface ButtonComponent {
     hover: ButtonStateStyle;
     active: ButtonStateStyle;
   };
+  icons?: Partial<Record<ButtonState, ButtonIcon>>;
 }
 
 export interface ButtonStateStyle {
@@ -140,6 +133,10 @@ export interface ButtonStateStyle {
     layoutSizing?: {
       horizontal: string;
       vertical: string;
+    };
+    dimensions?: {
+      width: number;
+      height: number;
     };
     padding: {
       vertical: number;
@@ -154,9 +151,9 @@ export interface ButtonStateStyle {
   };
 }
 
-// Main questline export format
-export interface QuestlineExport {
-  questlineId: string;
+// Main Chain Offer export format
+export interface ChainOfferExport {
+  chainOfferId: string;
   frameSize: {
     width: number;
     height: number;
@@ -164,38 +161,34 @@ export interface QuestlineExport {
   background: {
     exportUrl: string;
   };
-  quests: Quest[];
+  offers: Offer[];
   timer?: TimerComponent;
   header?: HeaderComponent;
-  rewards?: RewardsComponent;
-  button?: ButtonComponent;
+  buttons: ButtonComponent[];
   exportedAt: string;
   metadata: {
-    totalQuests: number;
-    exportFormat?: string;
     version: string;
+    exportFormat?: string;
   };
 }
 
 // Application state management
 export interface AppState {
-  questStates: Record<string, QuestState>;
+  offerStates: Record<string, OfferState>;
   headerState: HeaderState;
-  rewardsState: RewardsState;
-  buttonState: ButtonState;
+  buttonStates: Record<string, ButtonState>;
   isAnimating: boolean;
 }
 
 // Extracted assets from ZIP
 export interface ExtractedAssets {
-  questlineData: QuestlineExport;
+  chainOfferData: ChainOfferExport;
   backgroundImage?: string;
-  questImages: {
-    [questKey: string]: {
-      locked?: string;
-      active?: string;
-      unclaimed?: string;
-      completed?: string;
+  offerImages: {
+    [offerKey: string]: {
+      Locked?: string;
+      Unlocked?: string;
+      Claimed?: string;
     };
   };
   headerImages?: {
@@ -203,10 +196,7 @@ export interface ExtractedAssets {
     success?: string;
     fail?: string;
   };
-  rewardsImages?: {
-    active?: string;
-    fail?: string;
-    claimed?: string;
-    unclaimed?: string;
+  buttonIcons: {
+    [offerKey: string]: Partial<Record<ButtonState, string>>;
   };
 }

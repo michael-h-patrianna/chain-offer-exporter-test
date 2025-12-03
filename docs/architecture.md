@@ -9,9 +9,9 @@
 ## Core Architectural Principles
 
 ### 1. Coordinator-Renderer Pattern
-**Mental Model**: The `QuestlineViewer` is the "Coordinator" that handles layout, scaling, and state orchestration. It delegates specific drawing logic to "Renderers" (e.g., `QuestRenderer`, `ButtonRenderer`).
+**Mental Model**: The `ChainOfferViewer` is the "Coordinator" that handles layout, scaling, and state orchestration. It delegates specific drawing logic to "Renderers" (e.g., `QuestRenderer`, `ButtonRenderer`).
 **Decision Rule**:
-- If it involves global state or layout -> `QuestlineViewer`
+- If it involves global state or layout -> `ChainOfferViewer`
 - If it involves drawing a specific element -> `Renderers`
 
 ### 2. Dual-Platform Compatibility (CRITICAL)
@@ -31,7 +31,7 @@
 - Floats
 
 ### 3. State Management
-**Mental Model**: State is managed via React Context (`QuestlineContext`) or Custom Hooks (`useQuestlineState`). Logic is separated from UI.
+**Mental Model**: State is managed via React Context (`ChainOfferContext`) or Custom Hooks (`useChainOfferState`). Logic is separated from UI.
 
 ---
 
@@ -41,7 +41,7 @@
 src/
 ├── lib/
 │   ├── components/
-│   │   ├── QuestlineViewer.tsx      # Main Coordinator
+│   │   ├── ChainOfferViewer.tsx      # Main Coordinator
 │   │   └── renderers/               # Individual Element Renderers
 │   ├── hooks/                       # Logic & State
 │   ├── theme/                       # Design tokens & styles
@@ -55,7 +55,7 @@ src/
 1. **Pure Logic/Math** → `src/lib/utils/`
 2. **State Logic** → `src/lib/hooks/`
 3. **New UI Element** → `src/lib/components/renderers/`
-4. **Global Layout Change** → `src/lib/components/QuestlineViewer.tsx`
+4. **Global Layout Change** → `src/lib/components/ChainOfferViewer.tsx`
 
 ---
 
@@ -101,7 +101,7 @@ export const useMyFeature = (initialData: Data) => {
 ## Quick Decision Tree
 
 **"Where do I put X?"**
-1. Is it a visual component representing a part of the questline? → `src/lib/components/renderers/`
+1. Is it a visual component representing a part of the chainoffer? → `src/lib/components/renderers/`
 2. Is it logic for handling game state (e.g., unlocking a quest)? → `src/lib/hooks/`
 3. Is it a helper for parsing or math? → `src/lib/utils/`
 4. Is it a type definition? → `src/lib/types.ts`
@@ -109,15 +109,15 @@ export const useMyFeature = (initialData: Data) => {
 **"How do I add a new visual element?"**
 1. Define interface in `types.ts`
 2. Create `MyElementRenderer.tsx`
-3. Add to `QuestlineViewer` render logic
-4. Update `useQuestlineState` if it needs state
+3. Add to `ChainOfferViewer` render logic
+4. Update `useChainOfferState` if it needs state
 
 ---
 
 ## Common Mistakes
 
-❌ **Don't**: Put complex state logic inside `QuestlineViewer.tsx` or Renderers.
-✅ **Do**: Extract logic to `useQuestlineState` or specific hooks.
+❌ **Don't**: Put complex state logic inside `ChainOfferViewer.tsx` or Renderers.
+✅ **Do**: Extract logic to `useChainOfferState` or specific hooks.
 
 ❌ **Don't**: Use pixel values for layout in CSS.
 ✅ **Do**: Use calculations based on the `scale` prop or percentages.

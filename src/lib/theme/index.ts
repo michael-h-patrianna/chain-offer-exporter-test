@@ -1,7 +1,7 @@
 /**
  * Theme System - Cross-Platform Design Tokens
  *
- * This module exports all design tokens for the questline component library.
+ * This module exports all design tokens for the chainoffer component library.
  * All tokens are designed to be compatible with both React (web) and
  * React Native implementations.
  *

@@ -3,14 +3,14 @@ import { expect, test } from '@playwright/test';
 import path from 'path';
 
 /**
- * End-to-End tests for Questline Exporter App
- * Tests the complete user workflow from file upload to questline interaction
+ * End-to-End tests for ChainOffer Exporter App
+ * Tests the complete user workflow from file upload to chainoffer interaction
  */
 
 const PROJECT_ROOT = process.cwd();
 
-test.describe('Questline Exporter App - E2E Tests', () => {
-  // Note: Update this path to point to an actual test questline ZIP file
+test.describe('ChainOffer Exporter App - E2E Tests', () => {
+  // Note: Update this path to point to an actual test chainoffer ZIP file
   const testZipPath = path.join(PROJECT_ROOT, 'public/assets/theme.zip');
 
   test.beforeEach(async ({ page }: { page: Page }) => {
@@ -23,14 +23,14 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     // Check for app bar (mobile header)
     const appBarTitle = page.locator('.app-bar__title');
     await expect(appBarTitle).toBeVisible();
-    await expect(appBarTitle).toHaveText('Questline Demo');
+    await expect(appBarTitle).toHaveText('Chain Offer Demo');
 
     // Check for GitHub link in app bar
     const githubLink = page.locator('.app-bar__github-link');
     await expect(githubLink).toBeVisible();
     await expect(githubLink).toHaveAttribute(
       'href',
-      'https://github.com/michael-h-patrianna/questline-exporter-test'
+      'https://github.com/michael-h-patrianna/chainoffer-exporter-test'
     );
   });
 
@@ -127,7 +127,7 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     await expect(uploadSection).toBeVisible();
   });
 
-  test.skip('should upload and extract questline theme successfully', async ({
+  test.skip('should upload and extract chainoffer theme successfully', async ({
     page,
   }: {
     page: Page;
@@ -140,16 +140,16 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     await fileInput.setInputFiles(testZipPath);
 
     // Wait for extraction to complete
-    await expect(page.getByText('Questline Settings')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('ChainOffer Settings')).toBeVisible({ timeout: 10000 });
 
-    // Verify questline viewer is displayed
-    await expect(page.locator('.questline-viewer')).toBeVisible();
+    // Verify chainoffer viewer is displayed
+    await expect(page.locator('.chainoffer-viewer')).toBeVisible();
 
     // Verify control panels are visible
     await expect(page.getByText('Components Included:')).toBeVisible();
   });
 
-  test.skip('should display questline ID and frame dimensions', async ({
+  test.skip('should display chainoffer ID and frame dimensions', async ({
     page,
   }: {
     page: Page;
@@ -157,9 +157,9 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     const fileInput = page.locator('input[type="file"]').first();
     await fileInput.setInputFiles(testZipPath);
 
-    await expect(page.getByText('Questline Settings')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('ChainOffer Settings')).toBeVisible({ timeout: 10000 });
 
-    // Check for questline ID display
+    // Check for chainoffer ID display
     await expect(page.getByText(/ID:/)).toBeVisible();
 
     // Check for frame size display
@@ -169,18 +169,22 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     await expect(page.getByText(/Total Quests:/)).toBeVisible();
   });
 
-  test.skip('should adjust questline dimensions with sliders', async ({ page }: { page: Page }) => {
+  test.skip('should adjust chainoffer dimensions with sliders', async ({
+    page,
+  }: {
+    page: Page;
+  }) => {
     const fileInput = page.locator('input[type="file"]').first();
     await fileInput.setInputFiles(testZipPath);
 
-    await expect(page.getByText('Questline Settings')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('ChainOffer Settings')).toBeVisible({ timeout: 10000 });
 
     // Find width slider
-    const widthLabel = page.getByText(/Questline Width:/);
+    const widthLabel = page.getByText(/ChainOffer Width:/);
     await expect(widthLabel).toBeVisible();
 
     const widthInput = page.locator('input[type="range"]').filter({
-      has: page.locator('xpath=ancestor::label[contains(., "Questline Width")]'),
+      has: page.locator('xpath=ancestor::label[contains(., "ChainOffer Width")]'),
     });
 
     const initialWidth = await widthInput.inputValue();
@@ -198,7 +202,7 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     await page.waitForTimeout(200);
 
     // Wait for auto-loaded theme (check desktop sidebar specifically)
-    await expect(page.locator('.desktop-sidebar').getByText('Questline Settings')).toBeVisible({
+    await expect(page.locator('.desktop-sidebar').getByText('ChainOffer Settings')).toBeVisible({
       timeout: 10000,
     });
 
@@ -209,7 +213,7 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     await expect(backgroundButton).toBeVisible();
 
     // Verify the background is initially visible
-    const background = page.locator('.questline-background');
+    const background = page.locator('.chainoffer-background');
     await expect(background).toBeVisible();
 
     // Click to toggle (hide)
@@ -241,12 +245,14 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     await page.waitForTimeout(200);
 
     // Wait for auto-loaded theme
-    await expect(
-      page.locator('.desktop-sidebar').getByText('Questline Settings')
-    ).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('.desktop-sidebar').getByText('ChainOffer Settings')).toBeVisible({
+      timeout: 10000,
+    });
 
     // Find the "Show Quest Keys" checkbox
-    const questKeysCheckbox = page.locator('.desktop-sidebar input[type="checkbox"].toggle-checkbox');
+    const questKeysCheckbox = page.locator(
+      '.desktop-sidebar input[type="checkbox"].toggle-checkbox'
+    );
     await expect(questKeysCheckbox).toBeVisible();
 
     // Verify checkbox is initially unchecked
@@ -286,7 +292,7 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     const fileInput = page.locator('input[type="file"]').first();
     await fileInput.setInputFiles(testZipPath);
 
-    await expect(page.getByText('Questline Settings')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('ChainOffer Settings')).toBeVisible({ timeout: 10000 });
 
     // Find first quest
     const quest = page.locator('.quest-renderer').first();
@@ -311,7 +317,7 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     const fileInput = page.locator('input[type="file"]').first();
     await fileInput.setInputFiles(testZipPath);
 
-    await expect(page.getByText('Questline Settings')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('ChainOffer Settings')).toBeVisible({ timeout: 10000 });
 
     // Find header component
     const header = page.locator('.header-renderer');
@@ -332,7 +338,7 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     const fileInput = page.locator('input[type="file"]').first();
     await fileInput.setInputFiles(testZipPath);
 
-    await expect(page.getByText('Questline Settings')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('ChainOffer Settings')).toBeVisible({ timeout: 10000 });
 
     // Find rewards component
     const rewards = page.locator('.rewards-renderer');
@@ -353,7 +359,7 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     const fileInput = page.locator('input[type="file"]').first();
     await fileInput.setInputFiles(testZipPath);
 
-    await expect(page.getByText('Questline Settings')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('ChainOffer Settings')).toBeVisible({ timeout: 10000 });
 
     // Find button
     const button = page.locator('.button-renderer');
@@ -376,7 +382,7 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     const fileInput = page.locator('input[type="file"]').first();
     await fileInput.setInputFiles(testZipPath);
 
-    await expect(page.getByText('Questline Settings')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('ChainOffer Settings')).toBeVisible({ timeout: 10000 });
 
     // Check for interaction guide
     await expect(page.getByText('Interaction Guide:')).toBeVisible();
@@ -392,7 +398,7 @@ test.describe('Questline Exporter App - E2E Tests', () => {
     const fileInput = page.locator('input[type="file"]').first();
     await fileInput.setInputFiles(testZipPath);
 
-    await expect(page.getByText('Questline Settings')).toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('ChainOffer Settings')).toBeVisible({ timeout: 10000 });
 
     // Perform multiple interactions
     // 1. Cycle header
@@ -409,7 +415,7 @@ test.describe('Questline Exporter App - E2E Tests', () => {
 
     // Verify all states are maintained
     await expect(page.getByAltText(/Header success/i)).toBeVisible();
-    await expect(page.locator('.questline-background')).not.toBeVisible();
+    await expect(page.locator('.chainoffer-background')).not.toBeVisible();
   });
 
   test.skip('should handle error for invalid file upload', async ({ page }: { page: Page }) => {

@@ -1,11 +1,11 @@
 /**
  * Consolidated Utility Functions
  *
- * This module contains all the utility functions actually used by the questline components.
- * Consolidates functionality from utils.simple.ts and questlineDataTransform.ts.
+ * This module contains all the utility functions actually used by the chainoffer components.
+ * Consolidates functionality from utils.simple.ts and chainofferDataTransform.ts.
  */
 
-import { DropShadow, Fill, HeaderState, QuestlineExport, QuestState, RewardsState } from '../types';
+import { ChainOfferExport, DropShadow, Fill, HeaderState, OfferState } from '../types';
 
 // ============================================================================
 // STYLE CONVERSION FUNCTIONS
@@ -33,13 +33,6 @@ export function convertFillToCSS(fill: Fill): string {
         const angle = gradient.rotation || 0;
         return `linear-gradient(${angle}deg, ${stops})`;
 
-      case 'radial':
-        return `radial-gradient(circle, ${stops})`;
-
-      case 'angular':
-        const conicalAngle = gradient.rotation || 0;
-        return `conic-gradient(from ${conicalAngle}deg, ${stops})`;
-
       default:
         return 'transparent';
     }
@@ -56,7 +49,10 @@ export function convertShadowsToCSS(shadows: DropShadow[], scale: number = 1): s
   if (!shadows || shadows.length === 0) return 'none';
 
   return shadows
-    .map((shadow: any) => `${shadow.x * scale}px ${shadow.y * scale}px ${shadow.blur * scale}px ${shadow.spread * scale}px ${shadow.color}`)
+    .map(
+      (shadow: any) =>
+        `${shadow.x * scale}px ${shadow.y * scale}px ${shadow.blur * scale}px ${shadow.spread * scale}px ${shadow.color}`
+    )
     .join(', ');
 }
 
@@ -65,7 +61,7 @@ export function convertShadowsToCSS(shadows: DropShadow[], scale: number = 1): s
 // ============================================================================
 
 /**
- * Scale calculation result for responsive questline display
+ * Scale calculation result for responsive chainoffer display
  */
 interface ScaleCalculation {
   scale: number;
@@ -74,10 +70,10 @@ interface ScaleCalculation {
 }
 
 /**
- * Calculate the scale factor for responsive questline display
+ * Calculate the scale factor for responsive chainoffer display
  * Maintains aspect ratio while fitting within target dimensions
  */
-export function calculateQuestlineScale(
+export function calculateChainOfferScale(
   originalSize: { width: number; height: number },
   targetSize: { width: number; height: number }
 ): ScaleCalculation {
@@ -92,30 +88,29 @@ export function calculateQuestlineScale(
 }
 
 /**
- * Calculate simple content bounds for questline
+ * Calculate simple content bounds for chainoffer
  * Uses frame size as the base bounds since components handle their own positioning
  */
-export function calculateQuestlineContentBounds(
-  questlineData: QuestlineExport,
-  questStates: Record<string, QuestState>,
+export function calculateChainOfferContentBounds(
+  chainOfferData: ChainOfferExport,
+  offerStates: Record<string, OfferState>,
   headerState: HeaderState,
-  rewardsState: RewardsState,
   scale: number
 ) {
-  if (!questlineData || !questlineData.frameSize) {
-    console.warn('calculateQuestlineContentBounds: Invalid questline data');
+  if (!chainOfferData || !chainOfferData.frameSize) {
+    console.warn('calculateChainOfferContentBounds: Invalid chain offer data');
     return {
       minX: 0,
       minY: 0,
       maxX: 800 * scale,
       maxY: 600 * scale,
       width: 800 * scale,
-      height: 600 * scale
+      height: 600 * scale,
     };
   }
 
-  const width = questlineData.frameSize.width * scale;
-  const height = questlineData.frameSize.height * scale;
+  const width = chainOfferData.frameSize.width * scale;
+  const height = chainOfferData.frameSize.height * scale;
 
   return {
     minX: 0,
@@ -123,6 +118,6 @@ export function calculateQuestlineContentBounds(
     maxX: width,
     maxY: height,
     width,
-    height
+    height,
   };
 }

@@ -1,24 +1,24 @@
-/* Questline Viewer Component Styles */
+/* ChainOffer Viewer Component Styles */
 
 /* Main Container Layout */
-.questline-container-wrapper {
+.chainoffer-container-wrapper {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
   min-height: 300px;
-  /* Container size is controlled by questline dimensions + padding */
-  width: calc(var(--questline-width, 800px) + 40px);
-  height: calc(var(--questline-height, 600px) + 40px);
+  /* Container size is controlled by chainoffer dimensions + padding */
+  width: calc(var(--chainoffer-width, 800px) + 40px);
+  height: calc(var(--chainoffer-height, 600px) + 40px);
 }
 
-/* Main Questline Canvas */
-.questline-viewer {
+/* Main ChainOffer Canvas */
+.chainoffer-viewer {
   position: relative;
   /* Dimensions set via CSS custom properties */
-  width: var(--questline-width, 800px);
-  height: var(--questline-height, 600px);
+  width: var(--chainoffer-width, 800px);
+  height: var(--chainoffer-height, 600px);
 
   border-radius: 8px;
   overflow: visible;
@@ -40,7 +40,7 @@
 }
 
 /* Background Image Handling */
-.questline-background {
+.chainoffer-background {
   position: absolute;
   top: 0;
   left: 0;
@@ -50,7 +50,7 @@
   pointer-events: none;
 }
 
-.questline-background-image {
+.chainoffer-background-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -59,6 +59,27 @@
   will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+}
+
+/* Offer Components */
+.offer-component {
+  position: absolute;
+  left: var(--offer-left);
+  top: var(--offer-top);
+  width: var(--offer-width);
+  height: var(--offer-height);
+  transform: var(--offer-transform);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  z-index: 10;
+}
+
+.offer-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
 }
 
 /* Quest Components */
@@ -250,7 +271,7 @@
   cursor: not-allowed;
 } /* Responsive design */
 @media (max-width: 768px) {
-  .questline-container-wrapper {
+  .chainoffer-container-wrapper {
     padding: 10px;
   }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderState } from '../../types';
+import { HeaderComponent, HeaderState } from '../../types';
 
 /**
  * HeaderRenderer Component
@@ -19,7 +19,7 @@ import { HeaderState } from '../../types';
 
 interface HeaderRendererProps {
   /** Header data from ZIP file including position and bounds for each state */
-  header: any;
+  header: HeaderComponent;
   /** Current visual state being displayed */
   currentState: HeaderState;
   /** Scale factor for responsive sizing */
@@ -54,8 +54,8 @@ export const HeaderRenderer: React.FC<HeaderRendererProps> = ({
    * Calculate scaled dimensions directly from bounds
    * All scaling happens here for clarity in this demo
    */
-  const width = bounds.width * scale;
-  const height = bounds.height * scale;
+  const width = (bounds.width ?? bounds.w ?? 0) * scale;
+  const height = (bounds.height ?? bounds.h ?? 0) * scale;
 
   // ============================================================================
   // CSS VARIABLES GENERATION
@@ -66,16 +66,14 @@ export const HeaderRenderer: React.FC<HeaderRendererProps> = ({
    * Headers use x,y coordinates from ZIP data (center positioning)
    */
   const cssVariables: Record<string, string> = {
-    // Position: x,y - convert to top-left for CSS
-    '--header-left': `${(bounds.x * scale) - (width / 2)}px`,
-    '--header-top': `${(bounds.y * scale) - (height / 2)}px`,
+    // Position: x,y - use transform for centering
+    '--header-left': `${bounds.x * scale}px`,
+    '--header-top': `${bounds.y * scale}px`,
+    '--header-transform': `translate(-50%, -50%) ${bounds.rotation ? `rotate(${bounds.rotation}deg)` : ''}`,
 
     // Scaled dimensions
     '--header-width': `${width}px`,
     '--header-height': `${height}px`,
-
-    // Optional rotation
-    '--header-transform': bounds.rotation ? `rotate(${bounds.rotation}deg)` : 'none'
   };
 
   // ============================================================================
@@ -110,7 +108,7 @@ export const HeaderRenderer: React.FC<HeaderRendererProps> = ({
       style={cssVariables}
       onClick={onCycleState}
       title={`Header Component (${currentState.toUpperCase()})`}
-      role="banner"
+      role="button"
       aria-label={`Header in ${currentState} state`}
       tabIndex={0}
       onKeyDown={(e) => {

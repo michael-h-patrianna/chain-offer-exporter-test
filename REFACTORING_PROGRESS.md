@@ -1,4 +1,4 @@
-# Questline Exporter Test - Refactoring Progress
+# ChainOffer Exporter Test - Refactoring Progress
 
 ## ✅ COMPLETED
 
@@ -27,8 +27,8 @@
 
 ### 4. Directory Structure
 - ✅ Created new directory structure:
-  - `src/lib/` - Reusable questline components
-  - `src/lib/components/` - QuestlineViewer and renderers
+  - `src/lib/` - Reusable chainoffer components
+  - `src/lib/components/` - ChainOfferViewer and renderers
   - `src/lib/hooks/` - State management hooks
   - `src/lib/utils/` - Utility functions
   - `src/lib/theme/` - Design tokens
@@ -39,7 +39,7 @@
   - `src/tests/` - Test files
 
 - ✅ Moved existing files to new locations:
-  - QuestlineViewer → `src/lib/components/`
+  - ChainOfferViewer → `src/lib/components/`
   - Renderers → `src/lib/components/renderers/`
   - Hooks → `src/lib/hooks/`
   - Utils → `src/lib/utils/`
@@ -70,7 +70,7 @@
 
 ### 10. Component Visibility Feature
 - ⏳ Add component visibility state management in demo App
-- ⏳ Add toggle buttons in Sidebar for each questline component:
+- ⏳ Add toggle buttons in Sidebar for each chainoffer component:
   - Background
   - Header
   - Quests
@@ -80,7 +80,7 @@
 
 ### 11. Update Component Imports
 - ⏳ Update all imports in moved files to use path aliases (@lib, @components, etc.)
-- ⏳ Fix import paths in QuestlineViewer.tsx
+- ⏳ Fix import paths in ChainOfferViewer.tsx
 - ⏳ Fix import paths in all renderer components
 - ⏳ Fix import paths in hooks
 - ⏳ Fix import paths in utils
@@ -112,14 +112,14 @@
 
 1. **Create Sidebar Component** (`src/demo/components/Sidebar.tsx`)
    - File upload section
-   - Questline controls (width, height)
+   - ChainOffer controls (width, height)
    - Component visibility toggles
    - Information display
 
 2. **Create Demo App** (`src/demo/App.tsx`)
    - App bar integration
    - Sidebar (desktop) / Drawer (mobile)
-   - Main content area with QuestlineViewer
+   - Main content area with ChainOfferViewer
    - Component visibility state management
 
 3. **Create App Styles** (`src/demo/App.css`)
@@ -154,7 +154,7 @@ src/
 ```
 src/
   ├── lib/              # 🆕 Reusable library code
-  │   ├── components/   # QuestlineViewer + renderers
+  │   ├── components/   # ChainOfferViewer + renderers
   │   ├── hooks/        # State management
   │   ├── utils/        # Pure utilities
   │   ├── theme/        # 🆕 Design tokens

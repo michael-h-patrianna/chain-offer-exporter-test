@@ -1,4 +1,5 @@
 import React from 'react';
+import { TimerComponent } from '../../types';
 import { convertFillToCSS, convertShadowsToCSS } from '../../utils/utils';
 
 /**
@@ -19,7 +20,7 @@ import { convertFillToCSS, convertShadowsToCSS } from '../../utils/utils';
 
 interface TimerRendererProps {
   /** Timer data from ZIP file including position, dimensions, and styling */
-  timer: any;
+  timer: TimerComponent;
   /** Scale factor for responsive sizing */
   scale: number;
 }

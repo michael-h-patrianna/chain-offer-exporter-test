@@ -192,8 +192,8 @@
   color: var(--pf-fg);
 }
 
-/* Demo-specific Questline Container Wrapper */
-.questline-container {
+/* Demo-specific ChainOffer Container Wrapper */
+.chainoffer-container {
   background: transparent;
   border-radius: 12px;
   overflow: visible;

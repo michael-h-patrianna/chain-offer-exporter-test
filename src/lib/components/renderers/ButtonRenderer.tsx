@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonState } from '../../types';
+import { ButtonComponent, ButtonState, ImageBounds } from '../../types';
 import { convertFillToCSS, convertShadowsToCSS } from '../../utils/utils';
 
 /**
@@ -17,6 +17,7 @@ import { convertFillToCSS, convertShadowsToCSS } from '../../utils/utils';
  * - Theme-Based Styling: Uses imported theme data for all visual properties
  * - Center-Based Positioning: Positions from center point for natural UI placement
  * - Auto-Layout Support: Handles HUG, FILL, and FIXED layout modes from theme
+ * - Icon Overlay: Supports optional icon overlays with independent positioning
  *
  * Integration for Real Apps:
  * - Replace getButtonText() with actual button labels from your data
@@ -26,12 +27,16 @@ import { convertFillToCSS, convertShadowsToCSS } from '../../utils/utils';
  */
 
 interface ButtonRendererProps {
-  /** Button configuration from questline data including position, styling, and layout */
-  button: any;
+  /** Button configuration from chain offer data including position, styling, and layout */
+  button: ButtonComponent;
   /** Current visual state of the button (affects styling and behavior) */
   currentState: ButtonState;
   /** Scaling factor for responsive display across different screen sizes */
   scale: number;
+  /** Optional icon image URL for the current state */
+  icon?: string;
+  /** Optional bounds for the icon image */
+  iconBounds?: ImageBounds;
   /** Handler for mouse enter events (triggers hover state in parent) */
   onMouseEnter: () => void;
   /** Handler for mouse leave events (returns to default state in parent) */
@@ -44,6 +49,8 @@ export const ButtonRenderer: React.FC<ButtonRendererProps> = ({
   button,
   currentState,
   scale,
+  icon,
+  iconBounds,
   onMouseEnter,
   onMouseLeave,
   onClick
@@ -61,14 +68,6 @@ export const ButtonRenderer: React.FC<ButtonRendererProps> = ({
   // LAYOUT MODE DETECTION
   // ============================================================================
 
-  /**
-   * LAYOUT CONCEPTS:
-   * - Auto-layout: Dynamic sizing based on content and constraints
-   * - Fixed layout: Explicit width/height dimensions
-   *
-   * WHY THIS MATTERS:
-   * Different layout modes require different CSS approaches for proper scaling
-   */
   const isAutolayout = stateStyle.frame.isAutolayout;
   const layoutSizing = stateStyle.frame.layoutSizing;
 
@@ -78,15 +77,6 @@ export const ButtonRenderer: React.FC<ButtonRendererProps> = ({
 
   /**
    * POSITIONING STRATEGY: Center-Based Coordinates
-   *
-   * Unlike quests (top-left) or headers (centerX, bottomY), buttons use center positioning:
-   * - button.position.x/y represent the center point of the button
-   * - CSS left/top set the element to that exact position
-   * - CSS transform: translate(-50%, -50%) centers the element on that point
-   * - This creates natural button placement for UI design and works with all layout modes
-   *
-   * DEVELOPER INTEGRATION:
-   * When adapting to your database, ensure button coordinates represent center points
    */
   const cssVariables: Record<string, string> = {
     // Position: Center-based coordinates with transform centering
@@ -116,72 +106,81 @@ export const ButtonRenderer: React.FC<ButtonRendererProps> = ({
   // DIMENSION HANDLING (Layout Mode Specific)
   // ============================================================================
 
-  /**
-   * LAYOUT SIZING CONCEPTS:
-   *
-   * AUTO-LAYOUT MODES:
-   * - HUG: Size to content + padding (responsive width/height)
-   * - FILL: Expand to fill available space
-   * - FIXED: Use specific dimensions from design
-   *
-   * DEVELOPER LEARNING:
-   * This pattern shows how to handle different UI sizing strategies
-   * Adapt these concepts to your own responsive button system
-   */
   if (isAutolayout) {
     // Auto-layout mode: Dynamic sizing based on content and constraints
     if (layoutSizing) {
       // Horizontal sizing strategy
       if (layoutSizing.horizontal === "HUG") {
-        // HUG: Width determined by content + padding (no explicit width)
-        // This creates responsive buttons that grow/shrink with text length
+        // HUG: Width determined by content + padding
       } else if (layoutSizing.horizontal === "FILL") {
         // FILL: Button expands to fill available container width
         cssVariables['--button-width'] = '100%';
       } else {
         // FIXED: Use explicit width from design specifications
-        cssVariables['--button-width'] = `${stateStyle.frame.dimensions?.width * scale || 160 * scale}px`;
+        const width = stateStyle.frame.dimensions?.width ?? 160;
+        cssVariables['--button-width'] = `${width * scale}px`;
       }
 
       // Vertical sizing strategy
       if (layoutSizing.vertical === "HUG") {
-        // HUG: Height determined by content + padding (no explicit height)
-        // Creates buttons that adapt to text size and padding
+        // HUG: Height determined by content + padding
       } else if (layoutSizing.vertical === "FILL") {
         // FILL: Button expands to fill available container height
         cssVariables['--button-height'] = '100%';
       } else {
         // FIXED: Use explicit height from design specifications
-        cssVariables['--button-height'] = `${stateStyle.frame.dimensions?.height * scale || 60 * scale}px`;
+        const height = stateStyle.frame.dimensions?.height ?? 60;
+        cssVariables['--button-height'] = `${height * scale}px`;
       }
     }
-    // If layoutSizing is undefined, default to HUG behavior (content-based sizing)
   } else {
     // Fixed layout mode: Use explicit dimensions from design
-    cssVariables['--button-width'] = `${stateStyle.frame.dimensions?.width * scale || 160 * scale}px`;
-    cssVariables['--button-height'] = `${stateStyle.frame.dimensions?.height * scale || 60 * scale}px`;
+    const width = stateStyle.frame.dimensions?.width ?? 160;
+    const height = stateStyle.frame.dimensions?.height ?? 60;
+    cssVariables['--button-width'] = `${width * scale}px`;
+    cssVariables['--button-height'] = `${height * scale}px`;
   }
+
+  // ============================================================================
+  // ICON RENDERING
+  // ============================================================================
+
+  const renderIcon = () => {
+    if (!icon || !iconBounds) return null;
+
+    const width = iconBounds.width ?? iconBounds.w ?? 0;
+    const height = iconBounds.height ?? iconBounds.h ?? 0;
+
+    const iconStyle: React.CSSProperties = {
+      position: 'absolute',
+      left: `${iconBounds.x * scale}px`,
+      top: `${iconBounds.y * scale}px`,
+      width: `${width * scale}px`,
+      height: `${height * scale}px`,
+      pointerEvents: 'none', // Let clicks pass through to button
+      zIndex: 1,
+    };
+
+    return (
+      <img
+        src={icon}
+        alt=""
+        style={iconStyle}
+        className="button-icon"
+      />
+    );
+  };
 
   // ============================================================================
   // BUTTON TEXT GENERATION
   // ============================================================================
 
-  /**
-   * DEMO TEXT GENERATION:
-   * This function provides demo text for different button states
-   *
-   * PRODUCTION INTEGRATION:
-   * Replace this with actual button text from your data:
-   * - Database field: button.text or button.label
-   * - Localization: t(button.textKey)
-   * - Dynamic content: `Claim ${rewardAmount} Gold`
-   */
   const getButtonText = (state: ButtonState): string => {
     const textMap: Record<ButtonState, string> = {
-      'default': 'CLICK ME',
-      'hover': 'HOVERING',
-      'active': 'PRESSED',
-      'disabled': 'DISABLED'
+      'default': 'CLAIM',
+      'hover': 'CLAIM',
+      'active': 'CLAIMING',
+      'disabled': 'LOCKED'
     };
     return textMap[state] || 'BUTTON';
   };
@@ -194,15 +193,17 @@ export const ButtonRenderer: React.FC<ButtonRendererProps> = ({
     <button
       className="button-component"
       data-button-state={currentState}
+      data-offer-key={button.offerKey}
       style={cssVariables}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}
       disabled={currentState === 'disabled'}
-      title={`Button Component (${currentState.toUpperCase()})`}
-      aria-label={`${getButtonText(currentState)} button`}
+      title={`Button for ${button.offerKey} (${currentState.toUpperCase()})`}
+      aria-label={`${getButtonText(currentState)} for ${button.offerKey}`}
     >
-      {getButtonText(currentState)}
+      <span style={{ position: 'relative', zIndex: 2 }}>{getButtonText(currentState)}</span>
+      {renderIcon()}
     </button>
   );
 };

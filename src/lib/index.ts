@@ -1,42 +1,39 @@
 /**
- * Questline Component Library
+ * Chain Offer Component Library
  *
- * Production-ready components for rendering themed questline games.
+ * Production-ready components for rendering themed chain offer games.
  * These components are designed to work with themes exported from the
- * Figma Questline Plugin.
+ * Figma Chain Offer Plugin.
  *
  * @packageDocumentation
  */
 
 // Main Components
-export { QuestlineViewer } from './components/QuestlineViewer';
+export { ChainOfferViewer } from './components/ChainOfferViewer';
 
 // Renderer Components (for advanced customization)
 export { ButtonRenderer } from './components/renderers/ButtonRenderer';
 export { HeaderRenderer } from './components/renderers/HeaderRenderer';
-export { QuestRenderer } from './components/renderers/QuestRenderer';
-export { RewardsRenderer } from './components/renderers/RewardsRenderer';
+export { OfferRenderer } from './components/renderers/OfferRenderer';
 export { TimerRenderer } from './components/renderers/TimerRenderer';
 
 // Hooks
-export { QuestlineProvider, useQuestlineContext } from './hooks/QuestlineContext';
-export { useQuestlineState } from './hooks/useQuestlineState';
+export { ChainOfferProvider, useChainOfferContext } from './hooks/ChainOfferContext';
+export { useChainOfferState } from './hooks/useChainOfferState';
 
 // Utility Functions
-export { calculateQuestlineContentBounds, calculateQuestlineScale } from './utils/utils';
-export { extractQuestlineZip } from './utils/zipExtractor';
+export { calculateChainOfferContentBounds, calculateChainOfferScale } from './utils/utils';
+export { extractChainOfferZip } from './utils/zipExtractor';
 
 // Type Definitions
 export type {
   ButtonComponent,
   ButtonState,
+  ChainOfferExport,
   ExtractedAssets,
   HeaderComponent,
   HeaderState,
-  Quest,
-  QuestState,
-  QuestlineExport,
-  RewardsComponent,
-  RewardsState,
+  Offer,
+  OfferState,
   TimerComponent,
 } from './types';

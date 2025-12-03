@@ -39,9 +39,9 @@ We use Playwright for visual and integration testing.
 ```ts
 import { test, expect } from '@playwright/test';
 
-test('questline flows', async ({ page }) => {
+test('chainoffer flows', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('.questline-viewer')).toBeVisible();
+  await expect(page.locator('.chainoffer-viewer')).toBeVisible();
   // Interaction
   await page.click('[data-testid="quest-1"]');
 });
@@ -78,10 +78,10 @@ Use `renderHook` from `@testing-library/react`.
 
 ```tsx
 import { renderHook, act } from '@testing-library/react';
-import { useQuestlineState } from './useQuestlineState';
+import { useChainOfferState } from './useChainOfferState';
 
 test('should toggle state', () => {
-  const { result } = renderHook(() => useQuestlineState(mockData));
+  const { result } = renderHook(() => useChainOfferState(mockData));
   act(() => {
     result.current.cycleQuestState('quest1');
   });

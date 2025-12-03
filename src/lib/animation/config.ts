@@ -92,7 +92,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: {
         opacity: 0,
         y: -50,
@@ -109,7 +109,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: {
         opacity: 0,
         scale: 0.8,
@@ -124,7 +124,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: {
         opacity: 0,
         y: 20,
@@ -139,7 +139,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: {
         opacity: 0,
         y: 30,
@@ -156,7 +156,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: {
         opacity: 0,
         scaleX: 0.5,
@@ -171,7 +171,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: {
         opacity: 0,
         y: 20,
@@ -281,7 +281,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: {
         scale: 0.6,
         rotate: -15,
@@ -298,7 +298,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: {
         scale: 0.4,
         rotate: 10,
@@ -315,7 +315,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: {
         scale: 0.9,
         opacity: 0,
@@ -330,7 +330,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: {
         scale: 0.7,
         rotate: -8,
@@ -347,7 +347,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: {
         scaleX: 0.3,
         opacity: 0,
@@ -362,7 +362,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: {
         scale: 0.9,
         opacity: 0,
@@ -472,7 +472,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: {
         opacity: 0,
         rotateX: -100,
@@ -489,7 +489,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: {
         opacity: 0,
         rotateY: 180,
@@ -506,7 +506,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: {
         opacity: 0,
         rotateX: 80,
@@ -521,7 +521,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: {
         opacity: 0,
         rotateY: -90,
@@ -538,7 +538,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: {
         opacity: 0,
         rotateX: -45,
@@ -555,7 +555,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: {
         opacity: 0,
         rotateX: -30,
@@ -673,7 +673,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: {
         scale: 0.4,
         y: -180,
@@ -692,7 +692,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: {
         scale: 0,
         opacity: 0,
@@ -709,7 +709,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: {
         y: 60,
         opacity: 0,
@@ -726,7 +726,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: {
         scale: 0.5,
         y: -80,
@@ -745,7 +745,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: {
         scaleX: 0,
         opacity: 0,
@@ -762,7 +762,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: {
         y: 40,
         opacity: 0,
@@ -866,7 +866,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: {
         opacity: 0,
         x: -70,
@@ -881,7 +881,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: {
         opacity: 0,
         x: 70,
@@ -896,7 +896,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: {
         opacity: 0,
       },
@@ -909,7 +909,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: {
         opacity: 0,
         x: -50,
@@ -924,7 +924,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: {
         opacity: 0,
         scaleX: 0.6,
@@ -939,7 +939,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: {
         opacity: 0,
         y: 20,
@@ -1050,7 +1050,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: {
         opacity: 0,
         scale: 0,
@@ -1067,7 +1067,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: {
         opacity: 0,
         scale: 0,
@@ -1083,7 +1083,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: {
         opacity: 0,
         scaleX: 0,
@@ -1099,7 +1099,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: {
         opacity: 0,
         scale: 0,
@@ -1115,7 +1115,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: {
         opacity: 0,
         scaleX: 0,
@@ -1132,7 +1132,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: {
         opacity: 0,
         scale: 0,
@@ -1273,7 +1273,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: {
         opacity: 0,
         y: -250,
@@ -1296,7 +1296,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: {
         opacity: 0,
         x: 180,
@@ -1319,7 +1319,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: {
         opacity: 0,
         x: -100,
@@ -1340,7 +1340,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: {
         opacity: 0,
         x: 120,
@@ -1363,7 +1363,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: {
         opacity: 0,
         x: -100,
@@ -1384,7 +1384,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: {
         opacity: 0,
         y: 70,
@@ -1505,7 +1505,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: {
         opacity: 0,
       },
@@ -1522,7 +1522,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: {
         opacity: 0,
         scale: 0.75,
@@ -1539,7 +1539,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: {
         opacity: 0,
       },
@@ -1555,7 +1555,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: {
         opacity: 0,
       },
@@ -1572,7 +1572,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: {
         opacity: 0,
         scaleX: 0.5,
@@ -1589,7 +1589,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: {
         opacity: 0,
       },
@@ -1719,7 +1719,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: {
         opacity: 0,
         scaleY: 0.15,
@@ -1739,7 +1739,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: {
         opacity: 0,
         scaleY: 0.35,
@@ -1759,7 +1759,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: {
         opacity: 0,
         scaleY: 0.45,
@@ -1779,7 +1779,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: {
         opacity: 0,
         scaleY: 0.25,
@@ -1799,7 +1799,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: {
         opacity: 0,
         scaleX: 0.25,
@@ -1818,7 +1818,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: {
         opacity: 0,
         scaleY: 0.55,
@@ -1942,7 +1942,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: {
         opacity: 0,
         scale: 0.25,
@@ -1960,7 +1960,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: {
         opacity: 0,
         scale: 0.32,
@@ -1978,7 +1978,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: {
         opacity: 0,
         scale: 0.48,
@@ -1996,14 +1996,14 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: {
         opacity: 0,
         scale: 0.36,
       },
       visible: {
         opacity: [0, 0.26, 1, 0.38, 0.8, 1, 0.58, 1],
-        scale: [0.36, 0.66, 0.92, 1.09, 0.90, 1.03, 0.98, 1],
+        scale: [0.36, 0.66, 0.92, 1.09, 0.9, 1.03, 0.98, 1],
         x: [0, 8.5, -5.8, 3.3, -1.9, 1.1, -0.55, 0],
         y: [0, -6.5, 4.8, -3.3, 1.9, -1.1, 0.55, 0],
         transition: {
@@ -2014,7 +2014,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: {
         opacity: 0,
         scaleX: 0.28,
@@ -2032,7 +2032,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: {
         opacity: 0,
         scale: 0.4,
@@ -2161,7 +2161,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: {
         opacity: 0,
         y: -150,
@@ -2182,7 +2182,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: {
         opacity: 0,
         y: -70,
@@ -2201,7 +2201,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: {
         opacity: 0,
         y: -55,
@@ -2218,7 +2218,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: {
         opacity: 0,
         y: -90,
@@ -2237,7 +2237,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: {
         opacity: 0,
         y: -40,
@@ -2256,7 +2256,7 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
         },
       },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: {
         opacity: 0,
         y: 45,
@@ -2305,27 +2305,27 @@ export const revealAnimations: Record<AnimationType, RevealAnimation> = {
       hidden: { opacity: 1 },
       visible: { opacity: 1, transition: { duration: 0 } },
     },
-    questlineHeaderImageVariants: {
+    chainofferHeaderImageVariants: {
       hidden: { opacity: 1 },
       visible: { opacity: 1, transition: { duration: 0 } },
     },
-    questlineTimerVariants: {
+    chainofferTimerVariants: {
       hidden: { opacity: 1 },
       visible: { opacity: 1, transition: { duration: 0 } },
     },
-    questlineDescriptionVariants: {
+    chainofferDescriptionVariants: {
       hidden: { opacity: 1 },
       visible: { opacity: 1, transition: { duration: 0 } },
     },
-    questlineBonusRewardsVariants: {
+    chainofferBonusRewardsVariants: {
       hidden: { opacity: 1 },
       visible: { opacity: 1, transition: { duration: 0 } },
     },
-    questlineProgressBarVariants: {
+    chainofferProgressBarVariants: {
       hidden: { opacity: 1 },
       visible: { opacity: 1, transition: { duration: 0 } },
     },
-    questlineFooterVariants: {
+    chainofferFooterVariants: {
       hidden: { opacity: 1 },
       visible: { opacity: 1, transition: { duration: 0 } },
     },
@@ -2342,7 +2342,11 @@ export function getRevealAnimation(type: AnimationType): RevealAnimation {
 /**
  * Get all available animation types for selection
  */
-export function getAnimationOptions(): Array<{ value: AnimationType; label: string; description: string }> {
+export function getAnimationOptions(): Array<{
+  value: AnimationType;
+  label: string;
+  description: string;
+}> {
   return Object.values(revealAnimations).map((anim) => ({
     value: anim.id,
     label: anim.name,

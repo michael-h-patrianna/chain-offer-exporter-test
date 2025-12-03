@@ -1,17 +1,17 @@
 # Database & Data Model Guide for LLM Coding Agents
 
-**Purpose**: This document explains the data structures used by the Questline library, specifically the `QuestlineExport` format.
+**Purpose**: This document explains the data structures used by the ChainOffer library, specifically the `ChainOfferExport` format.
 
 ---
 
 ## Core Data Types
 
-### QuestlineExport (The Root)
+### ChainOfferExport (The Root)
 This matches the structure of `positions.json` inside the exported zip.
 
 ```typescript
-interface QuestlineExport {
-  questlineId: string;
+interface ChainOfferExport {
+  chainofferId: string;
   frameSize: { width: number; height: number }; // Original design size
   quests: Quest[];
   // Optional components
@@ -61,7 +61,7 @@ When a theme is exported, it follows this structure in the Zip:
 
 ```
 theme.zip
-├── positions.json          # The QuestlineExport data
+├── positions.json          # The ChainOfferExport data
 ├── background.webp
 ├── header_active.webp
 ├── header_fail.webp
@@ -71,11 +71,11 @@ theme.zip
 ```
 
 ### Helper: `ExtractedAssets`
-The `extractQuestlineZip` utility converts the flat zip into this structured object:
+The `extractChainOfferZip` utility converts the flat zip into this structured object:
 
 ```typescript
 interface ExtractedAssets {
-  questlineData: QuestlineExport;
+  chainofferData: ChainOfferExport;
   backgroundImage?: string; // Blob URL
   questImages: {
     [questKey: string]: {
@@ -96,7 +96,7 @@ interface ExtractedAssets {
 Each component (Quest, Header, Rewards) has `stateBounds`. This means the **position and size** can change depending on the state (e.g., a "locked" quest might be smaller than an "active" one).
 
 ### 2. Scale Independence
-All coordinates in `QuestlineExport` are in "design space" (e.g., 800x600). The `QuestlineViewer` handles scaling this to the actual screen size using the `scale` prop.
+All coordinates in `ChainOfferExport` are in "design space" (e.g., 800x600). The `ChainOfferViewer` handles scaling this to the actual screen size using the `scale` prop.
 
 ---
 

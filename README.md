@@ -1,16 +1,16 @@
-# Questline Demo - Developer Learning Project
+# ChainOffer Demo - Developer Learning Project
 
-This project is a **comprehensive learning resource** for developers who need to understand questline concepts and build their own questline viewers using actual database data. Rather than copying code directly, developers should study this implementation to understand the underlying patterns and data flows.
+This project is a **comprehensive learning resource** for developers who need to understand chainoffer concepts and build their own chainoffer viewers using actual database data. Rather than copying code directly, developers should study this implementation to understand the underlying patterns and data flows.
 
 ## 🎯 Purpose & Target Audience
 
 **This demo is designed for:**
-- Developers building questline systems for production websites
-- Teams integrating questline data from databases into React applications
-- Anyone needing to understand questline state management, positioning, and rewards systems
+- Developers building chainoffer systems for production websites
+- Teams integrating chainoffer data from databases into React applications
+- Anyone needing to understand chainoffer state management, positioning, and rewards systems
 
 **Key Learning Goals:**
-- Understand how questline data flows from source to display
+- Understand how chainoffer data flows from source to display
 - Learn quest state management patterns (locked → active → unclaimed → completed)
 - Comprehend reward system implementation and state cycling
 - Grasp positioning systems for different component types
@@ -21,7 +21,7 @@ This project is a **comprehensive learning resource** for developers who need to
 This project demonstrates **strict separation of concerns** to help developers quickly understand specific concepts:
 
 ### 📁 State Management Layer
-**Location:** `/src/hooks/useQuestlineState.ts`
+**Location:** `/src/hooks/useChainOfferState.ts`
 
 **What to study here:**
 - How quest progression states are managed
@@ -36,7 +36,7 @@ const cycleQuestState = (questKey: string) => {
 ```
 
 ### 📁 Data Transformation Layer
-**Location:** `/src/utils/questlineDataTransform.ts`
+**Location:** `/src/utils/chainofferDataTransform.ts`
 
 **What to study here:**
 - How Figma export data maps to React component props
@@ -64,7 +64,7 @@ convertHeaderPosition()   // Uses center-X, bottom-Y coordinates
 **Location:** `/src/utils/zipExtractor.ts`
 
 **What to study here:**
-- How exported questline data is processed
+- How exported chainoffer data is processed
 - Asset extraction and URL management
 - Error handling for missing or corrupted data
 
@@ -86,7 +86,7 @@ locked → active → unclaimed → completed
 ### Component States
 
 **Header States:** `active → success → fail`
-- Used for overall questline status indication
+- Used for overall chainoffer status indication
 
 **Rewards States:** `active → fail → claimed`
 - Manages reward availability and claiming status
@@ -96,7 +96,7 @@ locked → active → unclaimed → completed
 
 ## 🎨 Positioning Systems Explained
 
-Different questline components use different coordinate systems based on their design needs:
+Different chainoffer components use different coordinate systems based on their design needs:
 
 ### 1. Quest Components - Center Positioning
 ```typescript
@@ -142,13 +142,13 @@ The rewards system demonstrates a three-state progression:
 ```
 
 **Study Points:**
-- State management in `useQuestlineState.ts`
+- State management in `useChainOfferState.ts`
 - Visual rendering in `RewardsRenderer.tsx`
-- Fallback colors in `questlineDataTransform.ts`
+- Fallback colors in `chainofferDataTransform.ts`
 
 ## 📐 Responsive Scaling Logic
 
-The questline viewer automatically scales content while maintaining aspect ratios:
+The chainoffer viewer automatically scales content while maintaining aspect ratios:
 
 ```typescript
 // Core scaling calculation
@@ -168,13 +168,13 @@ const scale = Math.min(scaleX, scaleY); // Uniform scaling
 ```
 ZIP File → Extract Assets → Transform Data → Render Components
     ↓           ↓              ↓              ↓
-zipExtractor → questlineData → positioning → visual display
+zipExtractor → chainofferData → positioning → visual display
 ```
 
 **Study the flow:**
 1. **ZIP Processing** (`zipExtractor.ts`): Extract images and JSON data
-2. **Data Transformation** (`questlineDataTransform.ts`): Convert to render-ready format
-3. **State Management** (`useQuestlineState.ts`): Handle interactive states
+2. **Data Transformation** (`chainofferDataTransform.ts`): Convert to render-ready format
+3. **State Management** (`useChainOfferState.ts`): Handle interactive states
 4. **Component Rendering** (Renderer components): Display with styling
 
 ## 🛠️ Quick Start for Developers
@@ -182,23 +182,23 @@ zipExtractor → questlineData → positioning → visual display
 ### Understanding Specific Concepts
 
 **"How do rewards work?"**
-1. Read `useQuestlineState.ts` - reward state cycling logic
+1. Read `useChainOfferState.ts` - reward state cycling logic
 2. Read `RewardsRenderer.tsx` - visual presentation
-3. Read `questlineDataTransform.ts` - state color mapping
+3. Read `chainofferDataTransform.ts` - state color mapping
 
 **"How does quest positioning work?"**
-1. Read `questlineDataTransform.ts` - position conversion functions
+1. Read `chainofferDataTransform.ts` - position conversion functions
 2. Read `QuestRenderer.tsx` - CSS custom properties usage
-3. Read `QuestlineViewer.tsx` - scaling calculations
+3. Read `ChainOfferViewer.tsx` - scaling calculations
 
 **"How are different component states handled?"**
 1. Study the state objects in `types.ts`
-2. Follow state cycling in `useQuestlineState.ts`
+2. Follow state cycling in `useChainOfferState.ts`
 3. See visual representation in individual renderer components
 
 ### Integration Patterns
 
-**Using questline concepts in your own app:**
+**Using chainoffer concepts in your own app:**
 ```typescript
 // Pattern 1: State management
 const [questStates, setQuestStates] = useState<Record<string, QuestState>>({});

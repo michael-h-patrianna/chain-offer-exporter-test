@@ -1,7 +1,34 @@
 import JSZip from 'jszip';
-import { ExtractedAssets, QuestlineExport } from '../types';
+import { ChainOfferExport, ExtractedAssets } from '../types';
 
-export async function extractQuestlineZip(zipFile: File): Promise<ExtractedAssets> {
+/**
+ * Revokes all object URLs in the extracted assets to prevent memory leaks.
+ */
+export function revokeChainOfferAssets(assets: ExtractedAssets): void {
+  if (assets.backgroundImage) {
+    URL.revokeObjectURL(assets.backgroundImage);
+  }
+
+  Object.values(assets.offerImages).forEach((states) => {
+    Object.values(states).forEach((url) => {
+      if (url) URL.revokeObjectURL(url);
+    });
+  });
+
+  if (assets.headerImages) {
+    Object.values(assets.headerImages).forEach((url) => {
+      if (url) URL.revokeObjectURL(url);
+    });
+  }
+
+  Object.values(assets.buttonIcons).forEach((states) => {
+    Object.values(states).forEach((url) => {
+      if (url) URL.revokeObjectURL(url);
+    });
+  });
+}
+
+export async function extractChainOfferZip(zipFile: File): Promise<ExtractedAssets> {
   const zip = new JSZip();
   const zipContent = await zip.loadAsync(zipFile);
 
@@ -22,111 +49,121 @@ export async function extractQuestlineZip(zipFile: File): Promise<ExtractedAsset
   }
 
   const dataContent = await dataFile.async('string');
-  const questlineData: QuestlineExport = JSON.parse(dataContent);
+  const chainOfferData: ChainOfferExport = JSON.parse(dataContent);
 
-  // Extract background image (at root level in new format)
+  // Helper to extract image blob URL
+  const extractImage = async (filename: string | undefined): Promise<string | undefined> => {
+    if (!filename) return undefined;
+    const file = zipContent.file(filename);
+    if (file) {
+      const blob = await file.async('blob');
+      return URL.createObjectURL(blob);
+    }
+    console.warn(`Missing image: ${filename}`);
+    return undefined;
+  };
+
+  // Extract background image
   let backgroundImage: string | undefined;
-  if (questlineData.background?.exportUrl) {
-    const bgFile = zipContent.file(questlineData.background.exportUrl);
-    if (bgFile) {
-      const bgBlob = await bgFile.async('blob');
-      backgroundImage = URL.createObjectURL(bgBlob);
-      console.log('Found background image:', questlineData.background.exportUrl);
-    } else {
-      console.warn('Background image not found:', questlineData.background.exportUrl);
-    }
+  if (chainOfferData.background?.exportUrl) {
+    backgroundImage = await extractImage(chainOfferData.background.exportUrl);
+    if (backgroundImage) console.log('Found background image:', chainOfferData.background.exportUrl);
   }
 
-  // Extract quest images (at root level in new format)
-  const questImages: ExtractedAssets['questImages'] = {};
+  // Extract offer images in parallel
+  const offerImages: ExtractedAssets['offerImages'] = {};
+  
+  await Promise.all(
+    chainOfferData.offers.map(async (offer) => {
+      offerImages[offer.offerKey] = {};
+      
+      const imageStates = [
+        { state: 'Locked', filename: offer.lockedImg },
+        { state: 'Unlocked', filename: offer.unlockedImg },
+        { state: 'Claimed', filename: offer.claimedImg },
+      ] as const;
 
-  for (const quest of questlineData.quests) {
-    questImages[quest.questKey] = {};
+      await Promise.all(
+        imageStates.map(async ({ state, filename }) => {
+          if (filename) {
+            const url = await extractImage(filename);
+            if (url) {
+              offerImages[offer.offerKey][state] = url;
+              console.log(`Found offer image: ${offer.offerKey} ${state} -> ${filename}`);
+            }
+          }
+        })
+      );
+    })
+  );
 
-    // Extract all quest state images
-    const imageStates = [
-      { state: 'locked', filename: quest.lockedImg },
-      { state: 'active', filename: quest.activeImg },
-      { state: 'unclaimed', filename: quest.unclaimedImg },
-      { state: 'completed', filename: quest.completedImg },
-    ] as const;
-
-    for (const { state, filename } of imageStates) {
-      if (filename) {
-        const file = zipContent.file(filename);
-        if (file) {
-          const blob = await file.async('blob');
-          questImages[quest.questKey][state] = URL.createObjectURL(blob);
-          console.log(`Found quest image: ${quest.questKey} ${state} -> ${filename}`);
-        } else {
-          console.warn(`Missing quest image: ${quest.questKey} ${state} -> ${filename}`);
-        }
-      }
-    }
-  }
-
-  // Extract header images (optional)
-  let headerImages: ExtractedAssets['headerImages'] | undefined;
-  if (questlineData.header) {
+  // Extract header images
+  let headerImages: ExtractedAssets['headerImages'];
+  if (chainOfferData.header) {
     headerImages = {};
-    const headerImageStates = [
-      { state: 'active', filename: questlineData.header.activeImg },
-      { state: 'success', filename: questlineData.header.successImg },
-      { state: 'fail', filename: questlineData.header.failImg },
+    const headerStates = [
+      { state: 'active', filename: chainOfferData.header.activeImg },
+      { state: 'success', filename: chainOfferData.header.successImg },
+      { state: 'fail', filename: chainOfferData.header.failImg },
     ] as const;
 
-    for (const { state, filename } of headerImageStates) {
-      if (filename) {
-        const file = zipContent.file(filename);
-        if (file) {
-          const blob = await file.async('blob');
-          headerImages[state] = URL.createObjectURL(blob);
+    await Promise.all(
+      headerStates.map(async ({ state, filename }) => {
+        const url = await extractImage(filename);
+        if (url) {
+          headerImages![state] = url;
           console.log(`Found header image: ${state} -> ${filename}`);
-        } else {
-          console.warn(`Missing header image: ${state} -> ${filename}`);
         }
-      }
-    }
+      })
+    );
   }
 
-  // Extract rewards images (optional)
-  let rewardsImages: ExtractedAssets['rewardsImages'] | undefined;
-  if (questlineData.rewards) {
-    rewardsImages = {};
-    const rewardsImageStates = [
-      { state: 'active', filename: questlineData.rewards.activeImg },
-      { state: 'fail', filename: questlineData.rewards.failImg },
-      { state: 'claimed', filename: questlineData.rewards.claimedImg },
-      { state: 'unclaimed', filename: questlineData.rewards.unclaimedImg },
-    ] as const;
+  // Extract button icons
+  const buttonIcons: ExtractedAssets['buttonIcons'] = {};
 
-    for (const { state, filename } of rewardsImageStates) {
-      if (filename) {
-        const file = zipContent.file(filename);
-        if (file) {
-          const blob = await file.async('blob');
-          rewardsImages[state] = URL.createObjectURL(blob);
-          console.log(`Found rewards image: ${state} -> ${filename}`);
-        } else {
-          console.warn(`Missing rewards image: ${state} -> ${filename}`);
+  if (chainOfferData.buttons) {
+    await Promise.all(
+      chainOfferData.buttons.map(async (button) => {
+        buttonIcons[button.offerKey] = {};
+
+        if (button.icons) {
+          const iconStates = [
+            { state: 'default', icon: button.icons.default },
+            { state: 'disabled', icon: button.icons.disabled },
+            { state: 'hover', icon: button.icons.hover },
+            // active state might not have an icon usually, but if it does, add here
+          ] as const;
+
+          await Promise.all(
+            iconStates.map(async ({ state, icon }) => {
+              if (icon?.img) {
+                const url = await extractImage(icon.img);
+                if (url) {
+                  // @ts-ignore - we know state is a valid key
+                  buttonIcons[button.offerKey][state] = url;
+                  console.log(`Found button icon: ${button.offerKey} ${state} -> ${icon.img}`);
+                }
+              }
+            })
+          );
         }
-      }
-    }
+      })
+    );
   }
 
   console.log('Extraction complete:', {
-    questlineData,
-    questImages,
+    chainOfferData,
+    offerImages,
     headerImages,
-    rewardsImages,
+    buttonIcons,
     backgroundImage: !!backgroundImage,
   });
 
   return {
-    questlineData,
+    chainOfferData,
     backgroundImage,
-    questImages,
+    offerImages,
     headerImages,
-    rewardsImages,
+    buttonIcons,
   };
 }

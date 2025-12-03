@@ -4,23 +4,22 @@ import React from 'react';
 type ComponentVisibilityType = {
   background: boolean;
   header: boolean;
-  quests: boolean;
-  rewards: boolean;
+  offers: boolean;
   timer: boolean;
-  button: boolean;
+  buttons: boolean;
 };
 
 interface SidebarProps {
   extractedAssets: ExtractedAssets | null;
   isLoading: boolean;
   error: string | null;
-  questlineWidth: number;
-  questlineHeight: number;
+  chainofferWidth: number;
+  chainofferHeight: number;
   componentVisibility: ComponentVisibilityType;
   showQuestKeys: boolean;
   onFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onQuestlineWidthChange: (width: number) => void;
-  onQuestlineHeightChange: (height: number) => void;
+  onChainOfferWidthChange: (width: number) => void;
+  onChainOfferHeightChange: (height: number) => void;
   onToggleComponentVisibility: (component: keyof ComponentVisibilityType) => void;
   onToggleShowQuestKeys: (show: boolean) => void;
   className?: string;
@@ -31,13 +30,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
   extractedAssets,
   isLoading,
   error,
-  questlineWidth,
-  questlineHeight,
+  chainofferWidth,
+  chainofferHeight,
   componentVisibility,
   showQuestKeys,
   onFileUpload,
-  onQuestlineWidthChange,
-  onQuestlineHeightChange,
+  onChainOfferWidthChange,
+  onChainOfferHeightChange,
   onToggleComponentVisibility,
   onToggleShowQuestKeys,
   className,
@@ -57,7 +56,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           />
           <span className="file-input-button">{isLoading ? 'Loading...' : 'Choose ZIP File'}</span>
         </label>
-        {isLoading && <div className="loading-message">Loading questline theme...</div>}
+        {isLoading && <div className="loading-message">Loading chain offer theme...</div>}
         {error && <div className="error-message">{error}</div>}
       </div>
 
@@ -65,28 +64,28 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <>
           {/* Controls */}
           <div className="controls-section">
-            <h3>Questline Settings</h3>
+            <h3>Chain Offer Settings</h3>
             <div className="control-group">
               <label>
-                Questline Width: {questlineWidth}px
+                Frame Width: {chainofferWidth}px
                 <input
                   type="range"
                   min="200"
                   max="414"
-                  value={questlineWidth}
-                  onChange={(e) => onQuestlineWidthChange(Number(e.target.value))}
+                  value={chainofferWidth}
+                  onChange={(e) => onChainOfferWidthChange(Number(e.target.value))}
                 />
               </label>
             </div>
             <div className="control-group">
               <label>
-                Questline Height: {questlineHeight}px
+                Frame Height: {chainofferHeight}px
                 <input
                   type="range"
                   min="400"
                   max="900"
-                  value={questlineHeight}
-                  onChange={(e) => onQuestlineHeightChange(Number(e.target.value))}
+                  value={chainofferHeight}
+                  onChange={(e) => onChainOfferHeightChange(Number(e.target.value))}
                 />
               </label>
             </div>
@@ -98,7 +97,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   onChange={(e) => onToggleShowQuestKeys(e.target.checked)}
                   className="toggle-checkbox"
                 />
-                <span className="toggle-text">Show Quest Keys</span>
+                <span className="toggle-text">Show Offer Keys</span>
               </label>
             </div>
           </div>
@@ -108,20 +107,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
           {/* Information panel */}
           <div className="info-section">
-            <h3>Questline Information</h3>
+            <h3>Chain Offer Information</h3>
             <div className="info-grid">
               <div className="info-item">
-                <strong>ID:</strong> {extractedAssets.questlineData.questlineId}
+                <strong>ID:</strong> {extractedAssets.chainOfferData.chainOfferId}
               </div>
               <div className="info-item">
-                <strong>Frame Size:</strong> {extractedAssets.questlineData.frameSize.width} ×{' '}
-                {extractedAssets.questlineData.frameSize.height}
+                <strong>Frame Size:</strong> {extractedAssets.chainOfferData.frameSize.width} ×{' '}
+                {extractedAssets.chainOfferData.frameSize.height}
               </div>
               <div className="info-item">
-                <strong>Total Quests:</strong> {extractedAssets.questlineData.metadata.totalQuests}
+                <strong>Total Offers:</strong> {extractedAssets.chainOfferData.offers.length}
               </div>
               <div className="info-item">
-                <strong>Version:</strong> {extractedAssets.questlineData.metadata.version}
+                <strong>Version:</strong> {extractedAssets.chainOfferData.metadata.version}
               </div>
             </div>
 
@@ -152,49 +151,37 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   : '✗'}
               </button>
               <button
-                className={`component-toggle ${extractedAssets.questlineData.quests.length > 0 ? 'component-present' : 'component-missing'} ${!componentVisibility.quests ? 'component-hidden' : ''}`}
-                onClick={() => onToggleComponentVisibility('quests')}
-                disabled={extractedAssets.questlineData.quests.length === 0}
+                className={`component-toggle ${extractedAssets.chainOfferData.offers.length > 0 ? 'component-present' : 'component-missing'} ${!componentVisibility.offers ? 'component-hidden' : ''}`}
+                onClick={() => onToggleComponentVisibility('offers')}
+                disabled={extractedAssets.chainOfferData.offers.length === 0}
               >
-                Quests ({extractedAssets.questlineData.quests.length}){' '}
-                {extractedAssets.questlineData.quests.length > 0
-                  ? componentVisibility.quests
+                Offers ({extractedAssets.chainOfferData.offers.length}){' '}
+                {extractedAssets.chainOfferData.offers.length > 0
+                  ? componentVisibility.offers
                     ? '👁'
                     : '👁‍🗨'
                   : '✗'}
               </button>
               <button
-                className={`component-toggle ${extractedAssets.rewardsImages ? 'component-present' : 'component-missing'} ${!componentVisibility.rewards ? 'component-hidden' : ''}`}
-                onClick={() => onToggleComponentVisibility('rewards')}
-                disabled={!extractedAssets.rewardsImages}
-              >
-                Rewards{' '}
-                {extractedAssets.rewardsImages
-                  ? componentVisibility.rewards
-                    ? '👁'
-                    : '👁‍🗨'
-                  : '✗'}
-              </button>
-              <button
-                className={`component-toggle ${extractedAssets.questlineData.timer ? 'component-present' : 'component-missing'} ${!componentVisibility.timer ? 'component-hidden' : ''}`}
+                className={`component-toggle ${extractedAssets.chainOfferData.timer ? 'component-present' : 'component-missing'} ${!componentVisibility.timer ? 'component-hidden' : ''}`}
                 onClick={() => onToggleComponentVisibility('timer')}
-                disabled={!extractedAssets.questlineData.timer}
+                disabled={!extractedAssets.chainOfferData.timer}
               >
                 Timer{' '}
-                {extractedAssets.questlineData.timer
+                {extractedAssets.chainOfferData.timer
                   ? componentVisibility.timer
                     ? '👁'
                     : '👁‍🗨'
                   : '✗'}
               </button>
               <button
-                className={`component-toggle ${extractedAssets.questlineData.button ? 'component-present' : 'component-missing'} ${!componentVisibility.button ? 'component-hidden' : ''}`}
-                onClick={() => onToggleComponentVisibility('button')}
-                disabled={!extractedAssets.questlineData.button}
+                className={`component-toggle ${extractedAssets.chainOfferData.buttons.length > 0 ? 'component-present' : 'component-missing'} ${!componentVisibility.buttons ? 'component-hidden' : ''}`}
+                onClick={() => onToggleComponentVisibility('buttons')}
+                disabled={extractedAssets.chainOfferData.buttons.length === 0}
               >
-                Button{' '}
-                {extractedAssets.questlineData.button
-                  ? componentVisibility.button
+                Buttons ({extractedAssets.chainOfferData.buttons.length}){' '}
+                {extractedAssets.chainOfferData.buttons.length > 0
+                  ? componentVisibility.buttons
                     ? '👁'
                     : '👁‍🗨'
                   : '✗'}
@@ -204,14 +191,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <p className="interaction-help">
               <strong>Interaction Guide:</strong>
               <br />
-              • Click quests to cycle through states
+              • Click offers to cycle through states
               <br />
               • Click header to cycle: active → success → fail
               <br />
-              • Click rewards to cycle through states
-              <br />
-              • Click button to change states
-              <br />• Adjust questline dimensions using the sliders above
+              • Click buttons to change states
+              <br />• Adjust frame dimensions using the sliders above
             </p>
           </div>
         </>
