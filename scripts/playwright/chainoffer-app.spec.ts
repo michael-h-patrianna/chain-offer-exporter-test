@@ -3,13 +3,13 @@ import { expect, test } from '@playwright/test';
 import path from 'path';
 
 /**
- * End-to-End tests for ChainOffer Exporter App
+ * End-to-End tests for Chain Offer Exporter App
  * Tests the complete user workflow from file upload to chainoffer interaction
  */
 
 const PROJECT_ROOT = process.cwd();
 
-test.describe('ChainOffer Exporter App - E2E Tests', () => {
+test.describe('Chain Offer Exporter App - E2E Tests', () => {
   // Note: Update this path to point to an actual test chainoffer ZIP file
   const testZipPath = path.join(PROJECT_ROOT, 'public/assets/theme.zip');
 
