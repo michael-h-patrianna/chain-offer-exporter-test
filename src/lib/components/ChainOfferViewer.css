@@ -227,6 +227,7 @@
   background: var(--timer-bg);
   border-radius: var(--timer-border-radius);
   box-shadow: var(--timer-box-shadow);
+  border: var(--timer-border);
   padding: var(--timer-padding);
   display: flex;
   align-items: center;

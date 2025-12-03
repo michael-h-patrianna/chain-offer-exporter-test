@@ -66,6 +66,9 @@ export const TimerRenderer: React.FC<TimerRendererProps> = ({ timer, scale }) =>
     '--timer-bg': convertFillToCSS(timer.backgroundFill),
     '--timer-border-radius': `${timer.borderRadius * scale}px`,
     '--timer-box-shadow': convertShadowsToCSS(timer.dropShadows, scale),
+    '--timer-border': timer.stroke
+      ? `${timer.stroke.width * scale}px solid ${timer.stroke.color}`
+      : 'none',
     '--timer-font-size': `${timer.textStyle.fontSize * scale}px`,
     '--timer-color': timer.textStyle.color,
     '--timer-font-weight': `${timer.textStyle.fontWeight || 600}`,

@@ -82,6 +82,7 @@ export interface TimerComponent {
     horizontal: number;
   };
   dropShadows: DropShadow[];
+  stroke?: Stroke;
   textStyle: {
     fontSize: number;
     color: string;
