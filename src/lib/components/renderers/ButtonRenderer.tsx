@@ -153,8 +153,8 @@ export const ButtonRenderer: React.FC<ButtonRendererProps> = ({
 
     const iconStyle: React.CSSProperties = {
       position: 'absolute',
-      left: `${iconBounds.x * scale}px`,
-      top: `${iconBounds.y * scale}px`,
+      left: `${(iconBounds.x - width / 2) * scale}px`,
+      top: `${(iconBounds.y - height / 2) * scale}px`,
       width: `${width * scale}px`,
       height: `${height * scale}px`,
       pointerEvents: 'none', // Let clicks pass through to button
