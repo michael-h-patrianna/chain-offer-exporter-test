@@ -3,7 +3,7 @@
 // Component state types
 export type OfferState = 'Locked' | 'Unlocked' | 'Claimed';
 export type HeaderState = 'active' | 'success' | 'fail';
-export type ButtonState = 'default' | 'disabled' | 'hover' | 'active';
+export type ButtonState = 'default' | 'disabled' | 'hover' | 'active' | 'claimed';
 
 // Fill and styling types
 export interface Fill {
@@ -121,6 +121,7 @@ export interface ButtonComponent {
     disabled: ButtonStateStyle;
     hover: ButtonStateStyle;
     active: ButtonStateStyle;
+    claimed: ButtonStateStyle;
   };
   icons?: Partial<Record<ButtonState, ButtonIcon>>;
 }

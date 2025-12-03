@@ -191,11 +191,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <p className="interaction-help">
               <strong>Interaction Guide:</strong>
               <br />
-              • Click offers to cycle through states
+              • Click offers to cycle states (Locked → Unlocked → Claimed)
+              <br />
+              • Button states sync with offers
+              <br />
+              • Button interaction: Hover/Active states
               <br />
               • Click header to cycle: active → success → fail
-              <br />
-              • Click buttons to change states
               <br />• Adjust frame dimensions using the sliders above
             </p>
           </div>

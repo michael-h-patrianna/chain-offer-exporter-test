@@ -41,6 +41,10 @@ interface ButtonRendererProps {
   onMouseEnter: () => void;
   /** Handler for mouse leave events (returns to default state in parent) */
   onMouseLeave: () => void;
+  /** Handler for mouse down events (triggers active state in parent) */
+  onMouseDown: () => void;
+  /** Handler for mouse up events (returns to default/hover state in parent) */
+  onMouseUp: () => void;
   /** Handler for button clicks (triggers actions in parent component) */
   onClick: () => void;
 }
@@ -53,6 +57,8 @@ export const ButtonRenderer: React.FC<ButtonRendererProps> = ({
   iconBounds,
   onMouseEnter,
   onMouseLeave,
+  onMouseDown,
+  onMouseUp,
   onClick
 }) => {
   // ============================================================================
@@ -180,7 +186,8 @@ export const ButtonRenderer: React.FC<ButtonRendererProps> = ({
       'default': 'CLAIM',
       'hover': 'CLAIM',
       'active': 'CLAIMING',
-      'disabled': 'LOCKED'
+      'disabled': 'LOCKED',
+      'claimed': 'CLAIMED'
     };
     return textMap[state] || 'BUTTON';
   };
@@ -197,6 +204,8 @@ export const ButtonRenderer: React.FC<ButtonRendererProps> = ({
       style={cssVariables}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
       onClick={onClick}
       disabled={currentState === 'disabled'}
       title={`Button for ${button.offerKey} (${currentState.toUpperCase()})`}

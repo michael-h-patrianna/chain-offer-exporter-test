@@ -40,6 +40,8 @@ interface UseChainOfferStateReturn {
   setButtonState: (offerKey: string, state: ButtonState) => void;
   handleButtonMouseEnter: (offerKey: string) => void;
   handleButtonMouseLeave: (offerKey: string) => void;
+  handleButtonMouseDown: (offerKey: string) => void;
+  handleButtonMouseUp: (offerKey: string) => void;
   handleButtonClick: (offerKey: string, onButtonClick?: () => void) => void;
 
   // Utility functions
@@ -135,14 +137,37 @@ export function useChainOfferState(chainOfferData: ChainOfferExport): UseChainOf
   /**
    * Cycle an offer through its state progression
    * Locked -> Unlocked -> Claimed -> Locked (loops)
+   * Also updates the corresponding button state:
+   * Locked -> disabled
+   * Unlocked -> default
+   * Claimed -> claimed
    */
   const cycleOfferState = useCallback((offerKey: string) => {
     const currentState = getOfferState(offerKey);
     const currentIndex = OFFER_STATE_ORDER.indexOf(currentState);
     const nextState = OFFER_STATE_ORDER[(currentIndex + 1) % OFFER_STATE_ORDER.length];
 
-    setOfferState(offerKey, nextState);
-  }, [getOfferState, setOfferState]);
+    // Determine corresponding button state
+    let nextButtonState: ButtonState = 'disabled';
+    if (nextState === 'Unlocked') {
+      nextButtonState = 'default';
+    } else if (nextState === 'Claimed') {
+      nextButtonState = 'claimed';
+    }
+
+    // Update both states
+    setComponentState(prev => ({
+      ...prev,
+      offerStates: {
+        ...prev.offerStates,
+        [offerKey]: nextState
+      },
+      buttonStates: {
+        ...prev.buttonStates,
+        [offerKey]: nextButtonState
+      }
+    }));
+  }, [getOfferState]);
 
   // Header State Management Functions
 
@@ -195,31 +220,43 @@ export function useChainOfferState(chainOfferData: ChainOfferExport): UseChainOf
   }, [getButtonState, setButtonState]);
 
   /**
-   * Handle mouse leave on button (hover -> default)
+   * Handle mouse leave on button (hover/active -> default)
    */
   const handleButtonMouseLeave = useCallback((offerKey: string) => {
-    if (getButtonState(offerKey) === 'hover') {
+    const currentState = getButtonState(offerKey);
+    if (currentState === 'hover' || currentState === 'active') {
       setButtonState(offerKey, 'default');
     }
   }, [getButtonState, setButtonState]);
 
   /**
-   * Handle button click with visual feedback
-   * Shows 'active' state briefly, then returns to default
+   * Handle mouse down on button (default/hover -> active)
+   */
+  const handleButtonMouseDown = useCallback((offerKey: string) => {
+    const currentState = getButtonState(offerKey);
+    if (currentState === 'default' || currentState === 'hover') {
+      setButtonState(offerKey, 'active');
+    }
+  }, [getButtonState, setButtonState]);
+
+  /**
+   * Handle mouse up on button (active -> default/hover)
+   * We revert to hover if still inside, or default (handled by leave usually, but good to be safe)
+   * For simplicity, we'll revert to hover as the mouse is likely still over it.
+   */
+  const handleButtonMouseUp = useCallback((offerKey: string) => {
+    if (getButtonState(offerKey) === 'active') {
+      setButtonState(offerKey, 'hover');
+    }
+  }, [getButtonState, setButtonState]);
+
+  /**
+   * Handle button click
+   * Purely for external action triggering now, visual state handled by down/up/enter/leave
    */
   const handleButtonClick = useCallback((offerKey: string, onButtonClick?: () => void) => {
-    setButtonState(offerKey, 'active');
-
-    // Visual feedback: return to default state after brief delay
-    setTimeout(() => {
-      if (isMounted.current) {
-        setButtonState(offerKey, 'default');
-      }
-    }, 150);
-
-    // Execute external click handler if provided
     onButtonClick?.();
-  }, [setButtonState]);
+  }, []);
 
   // Utility Functions
 
@@ -255,6 +292,8 @@ export function useChainOfferState(chainOfferData: ChainOfferExport): UseChainOf
     setButtonState,
     handleButtonMouseEnter,
     handleButtonMouseLeave,
+    handleButtonMouseDown,
+    handleButtonMouseUp,
     handleButtonClick,
 
     // Utilities

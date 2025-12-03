@@ -125,6 +125,33 @@ describe('ChainOfferContext', () => {
         });
         expect(renderResult.result.current.state.offerStates.offer1).toBe('Locked');
       });
+
+      it('should sync button state when cycling offer', () => {
+        // Initial: Locked -> disabled (implied default logic from implementation)
+        // But actually in initializeButtonStates they start as 'default'.
+        // The cycleOfferState logic overrides this on first cycle.
+        
+        // 1. Locked -> Unlocked => Button should become 'default'
+        act(() => {
+          renderResult.result.current.cycleOfferState('offer1');
+        });
+        expect(renderResult.result.current.state.offerStates.offer1).toBe('Unlocked');
+        expect(renderResult.result.current.state.buttonStates.offer1).toBe('default');
+
+        // 2. Unlocked -> Claimed => Button should become 'claimed'
+        act(() => {
+          renderResult.result.current.cycleOfferState('offer1');
+        });
+        expect(renderResult.result.current.state.offerStates.offer1).toBe('Claimed');
+        expect(renderResult.result.current.state.buttonStates.offer1).toBe('claimed');
+
+        // 3. Claimed -> Locked => Button should become 'disabled'
+        act(() => {
+          renderResult.result.current.cycleOfferState('offer1');
+        });
+        expect(renderResult.result.current.state.offerStates.offer1).toBe('Locked');
+        expect(renderResult.result.current.state.buttonStates.offer1).toBe('disabled');
+      });
     });
   });
 
@@ -149,6 +176,44 @@ describe('ChainOfferContext', () => {
 
         expect(renderResult.result.current.state.buttonStates.offer1).toBe('hover');
         expect(renderResult.result.current.state.buttonStates.offer2).toBe('default');
+      });
+
+      it('should handle claimed button state', () => {
+        act(() => {
+          renderResult.result.current.setButtonState('offer1', 'claimed');
+        });
+
+        expect(renderResult.result.current.state.buttonStates.offer1).toBe('claimed');
+      });
+    });
+
+    describe('Mouse Interactions', () => {
+      it('should handle mouse down (default -> active)', () => {
+        // Ensure default first
+        act(() => { renderResult.result.current.setButtonState('offer1', 'default'); });
+        
+        act(() => {
+          renderResult.result.current.handleButtonMouseDown('offer1');
+        });
+        expect(renderResult.result.current.state.buttonStates.offer1).toBe('active');
+      });
+
+      it('should not handle mouse down if disabled', () => {
+        act(() => { renderResult.result.current.setButtonState('offer1', 'disabled'); });
+        
+        act(() => {
+          renderResult.result.current.handleButtonMouseDown('offer1');
+        });
+        expect(renderResult.result.current.state.buttonStates.offer1).toBe('disabled');
+      });
+
+      it('should handle mouse up (active -> hover)', () => {
+        act(() => { renderResult.result.current.setButtonState('offer1', 'active'); });
+        
+        act(() => {
+          renderResult.result.current.handleButtonMouseUp('offer1');
+        });
+        expect(renderResult.result.current.state.buttonStates.offer1).toBe('hover');
       });
     });
   });

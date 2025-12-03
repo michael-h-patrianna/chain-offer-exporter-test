@@ -115,6 +115,8 @@ export const ChainOfferViewer: React.FC<ChainOfferViewerProps> = ({
     cycleHeaderState,
     handleButtonMouseEnter,
     handleButtonMouseLeave,
+    handleButtonMouseDown,
+    handleButtonMouseUp,
     handleButtonClick
   } = useChainOfferState(chainOfferData);
 
@@ -248,6 +250,8 @@ export const ChainOfferViewer: React.FC<ChainOfferViewerProps> = ({
             iconBounds={iconBounds}
             onMouseEnter={() => handleButtonMouseEnter(button.offerKey)}
             onMouseLeave={() => handleButtonMouseLeave(button.offerKey)}
+            onMouseDown={() => handleButtonMouseDown(button.offerKey)}
+            onMouseUp={() => handleButtonMouseUp(button.offerKey)}
             onClick={() => handleButtonClick(button.offerKey, () => onButtonClick?.(button.offerKey))}
           />
         </m.div>

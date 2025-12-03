@@ -135,6 +135,17 @@ describe('zipExtractor', () => {
             },
             text: { fontSize: 16, color: '#ffffff' },
           },
+          claimed: {
+            frame: {
+              borderRadius: 4,
+              backgroundFill: { type: 'solid', color: '#28a745' },
+              isAutolayout: false,
+              layoutSizing: { horizontal: 'fixed', vertical: 'fixed' },
+              padding: { vertical: 12, horizontal: 24 },
+              dropShadows: [],
+            },
+            text: { fontSize: 16, color: '#ffffff' },
+          },
         },
       }
     ],

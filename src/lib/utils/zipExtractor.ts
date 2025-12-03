@@ -131,6 +131,7 @@ export async function extractChainOfferZip(zipFile: File): Promise<ExtractedAsse
             { state: 'default', icon: button.icons.default },
             { state: 'disabled', icon: button.icons.disabled },
             { state: 'hover', icon: button.icons.hover },
+            { state: 'claimed', icon: button.icons.claimed },
             // active state might not have an icon usually, but if it does, add here
           ] as const;
 

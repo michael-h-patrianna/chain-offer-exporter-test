@@ -15,6 +15,10 @@ interface ChainOfferContextValue {
 
   // Button state management
   setButtonState: (offerKey: string, state: ButtonState) => void;
+  handleButtonMouseEnter: (offerKey: string) => void;
+  handleButtonMouseLeave: (offerKey: string) => void;
+  handleButtonMouseDown: (offerKey: string) => void;
+  handleButtonMouseUp: (offerKey: string) => void;
 
   // Animation management
   setIsAnimating: (isAnimating: boolean) => void;
@@ -77,11 +81,23 @@ export function ChainOfferProvider({ children, chainOfferData }: ChainOfferProvi
       const nextIndex = (currentIndex + 1) % offerStates.length;
       const nextState = offerStates[nextIndex];
 
+      // Sync button state
+      let nextButtonState: ButtonState = 'disabled';
+      if (nextState === 'Unlocked') {
+        nextButtonState = 'default';
+      } else if (nextState === 'Claimed') {
+        nextButtonState = 'claimed';
+      }
+
       return {
         ...prev,
         offerStates: {
           ...prev.offerStates,
           [offerKey]: nextState
+        },
+        buttonStates: {
+          ...prev.buttonStates,
+          [offerKey]: nextButtonState
         }
       };
     });
@@ -116,6 +132,58 @@ export function ChainOfferProvider({ children, chainOfferData }: ChainOfferProvi
         [offerKey]: newState
       }
     }));
+  }, []);
+
+  const handleButtonMouseEnter = useCallback((offerKey: string) => {
+    setState(prev => {
+      const currentBtnState = prev.buttonStates[offerKey] || 'default';
+      if (currentBtnState === 'default') {
+        return {
+          ...prev,
+          buttonStates: { ...prev.buttonStates, [offerKey]: 'hover' }
+        };
+      }
+      return prev;
+    });
+  }, []);
+
+  const handleButtonMouseLeave = useCallback((offerKey: string) => {
+    setState(prev => {
+      const currentBtnState = prev.buttonStates[offerKey];
+      if (currentBtnState === 'hover' || currentBtnState === 'active') {
+        return {
+          ...prev,
+          buttonStates: { ...prev.buttonStates, [offerKey]: 'default' }
+        };
+      }
+      return prev;
+    });
+  }, []);
+
+  const handleButtonMouseDown = useCallback((offerKey: string) => {
+    setState(prev => {
+      const currentBtnState = prev.buttonStates[offerKey] || 'default';
+      if (currentBtnState === 'default' || currentBtnState === 'hover') {
+        return {
+          ...prev,
+          buttonStates: { ...prev.buttonStates, [offerKey]: 'active' }
+        };
+      }
+      return prev;
+    });
+  }, []);
+
+  const handleButtonMouseUp = useCallback((offerKey: string) => {
+    setState(prev => {
+      const currentBtnState = prev.buttonStates[offerKey];
+      if (currentBtnState === 'active') {
+        return {
+          ...prev,
+          buttonStates: { ...prev.buttonStates, [offerKey]: 'hover' }
+        };
+      }
+      return prev;
+    });
   }, []);
 
   // Animation management
@@ -157,6 +225,10 @@ export function ChainOfferProvider({ children, chainOfferData }: ChainOfferProvi
     setHeaderState,
     cycleHeaderState,
     setButtonState,
+    handleButtonMouseEnter,
+    handleButtonMouseLeave,
+    handleButtonMouseDown,
+    handleButtonMouseUp,
     setIsAnimating,
     finishAnimation,
     resetAllStates

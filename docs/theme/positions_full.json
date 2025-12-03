@@ -473,6 +473,87 @@
             "textAlignVertical": "TOP",
             "lineHeightPx": 18
           }
+        },
+        "claimed": {
+          "frame": {
+            "dimensions": {
+              "width": 154,
+              "height": 58
+            },
+            "borderRadius": 50,
+            "backgroundFill": {
+              "type": "gradient",
+              "gradient": {
+                "type": "linear",
+                "rotation": 178,
+                "transform": [
+                  [
+                    0.033057332038879395,
+                    1,
+                    -0.016528666019439697
+                  ],
+                  [
+                    -0.9987144470214844,
+                    -8.59849258461054e-9,
+                    0.9993572235107422
+                  ]
+                ],
+                "stops": [
+                  {
+                    "color": "#8eb9c3",
+                    "position": 0
+                  },
+                  {
+                    "color": "#53668c",
+                    "position": 0.9322916865348816
+                  }
+                ],
+                "handleVectors": [
+                  {
+                    "x": -0.5165286660194397,
+                    "y": 0.4993572235107422
+                  },
+                  {
+                    "x": -0.4834713339805603,
+                    "y": -0.4993572235107422
+                  },
+                  {
+                    "x": 0.4834713339805603,
+                    "y": 0.4993572149122496
+                  }
+                ],
+                "handleOrigin": {
+                  "x": 0.5,
+                  "y": 0.5
+                }
+              }
+            },
+            "isAutolayout": true,
+            "layoutMode": "HORIZONTAL",
+            "layoutSizing": {
+              "horizontal": "FIXED",
+              "vertical": "FIXED"
+            },
+            "primaryAxisAlignItems": "CENTER",
+            "counterAxisAlignItems": "CENTER",
+            "padding": {
+              "vertical": 20,
+              "horizontal": 40
+            },
+            "dropShadows": [],
+            "stroke": {
+              "width": 2,
+              "color": "#4d4c5880"
+            }
+          },
+          "text": {
+            "fontSize": 18,
+            "color": "#ffffff66",
+            "fontWeight": 900,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP",
+            "lineHeightPx": 18
+          }
         }
       },
       "icons": {
@@ -502,6 +583,15 @@
             "height": 58
           },
           "img": "button_offer1_hover_icon.webp"
+        },
+        "claimed": {
+          "bounds": {
+            "x": 13,
+            "y": 29,
+            "width": 58,
+            "height": 58
+          },
+          "img": "button_offer1_claimed_icon.webp"
         }
       }
     },
@@ -859,6 +949,87 @@
             "textAlignVertical": "TOP",
             "lineHeightPx": 18
           }
+        },
+        "claimed": {
+          "frame": {
+            "dimensions": {
+              "width": 154,
+              "height": 58
+            },
+            "borderRadius": 50,
+            "backgroundFill": {
+              "type": "gradient",
+              "gradient": {
+                "type": "linear",
+                "rotation": 178,
+                "transform": [
+                  [
+                    0.033057332038879395,
+                    1,
+                    -0.016528666019439697
+                  ],
+                  [
+                    -0.9987144470214844,
+                    -8.59849258461054e-9,
+                    0.9993572235107422
+                  ]
+                ],
+                "stops": [
+                  {
+                    "color": "#8eb9c3",
+                    "position": 0
+                  },
+                  {
+                    "color": "#53668c",
+                    "position": 0.9322916865348816
+                  }
+                ],
+                "handleVectors": [
+                  {
+                    "x": -0.5165286660194397,
+                    "y": 0.4993572235107422
+                  },
+                  {
+                    "x": -0.4834713339805603,
+                    "y": -0.4993572235107422
+                  },
+                  {
+                    "x": 0.4834713339805603,
+                    "y": 0.4993572149122496
+                  }
+                ],
+                "handleOrigin": {
+                  "x": 0.5,
+                  "y": 0.5
+                }
+              }
+            },
+            "isAutolayout": true,
+            "layoutMode": "HORIZONTAL",
+            "layoutSizing": {
+              "horizontal": "FIXED",
+              "vertical": "FIXED"
+            },
+            "primaryAxisAlignItems": "CENTER",
+            "counterAxisAlignItems": "CENTER",
+            "padding": {
+              "vertical": 20,
+              "horizontal": 40
+            },
+            "dropShadows": [],
+            "stroke": {
+              "width": 2,
+              "color": "#4d4c5880"
+            }
+          },
+          "text": {
+            "fontSize": 18,
+            "color": "#ffffff66",
+            "fontWeight": 900,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP",
+            "lineHeightPx": 18
+          }
         }
       },
       "icons": {
@@ -888,11 +1059,20 @@
             "height": 58
           },
           "img": "button_offer2_hover_icon.webp"
+        },
+        "claimed": {
+          "bounds": {
+            "x": 13,
+            "y": 29,
+            "width": 58,
+            "height": 58
+          },
+          "img": "button_offer2_claimed_icon.webp"
         }
       }
     }
   ],
-  "exportedAt": "2025-12-03T18:20:59.054Z",
+  "exportedAt": "2025-12-03T19:27:06.820Z",
   "metadata": {
     "exportFormat": "webp",
     "version": "1.0.0"
