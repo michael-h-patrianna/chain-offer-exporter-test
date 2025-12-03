@@ -142,7 +142,7 @@ function AppContent() {
       <AppBar
         onMenuClick={() => setIsDrawerOpen(true)}
         title="Chain Offer Demo"
-        githubUrl="https://github.com/michael-h-patrianna/chainoffer-exporter-test"
+        githubUrl="https://github.com/michael-h-patrianna/chain-offer-exporter-test"
       />
 
       <main className="App-main">

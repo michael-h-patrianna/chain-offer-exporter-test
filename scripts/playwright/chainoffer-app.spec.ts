@@ -30,7 +30,7 @@ test.describe('Chain Offer Exporter App - E2E Tests', () => {
     await expect(githubLink).toBeVisible();
     await expect(githubLink).toHaveAttribute(
       'href',
-      'https://github.com/michael-h-patrianna/chainoffer-exporter-test'
+      'https://github.com/michael-h-patrianna/chain-offer-exporter-test'
     );
   });
 
